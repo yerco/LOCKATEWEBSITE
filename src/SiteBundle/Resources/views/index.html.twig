@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lock-8 website</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+{% block body %}
+    <header class="header">
+        <ul class="navi">
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+                {% include '@Site/allowed.html.twig' %}
+            {% else %}
+                Not logged pal
+                {% include '@FOSUser/Security/login_content.html.twig' %}
+            {% endif %}
+        </ul>
+    </header>
+{% endblock %}
+</body>
+</html>

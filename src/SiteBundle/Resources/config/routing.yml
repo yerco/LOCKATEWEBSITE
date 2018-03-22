@@ -1,0 +1,7 @@
+lockate_site_homepage:
+    path:     /
+    defaults: { _controller: SiteBundle:Site:index }
+
+lockate_site_logged:
+    path: /site
+    defaults: { _controller: SiteBundle:Site:inside }
