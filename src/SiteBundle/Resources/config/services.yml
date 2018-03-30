@@ -1,0 +1,5 @@
+services:
+    json_handler:
+        class: SiteBundle\Service\JsonHandler
+        arguments: [ '@logger' ]
+        public: true

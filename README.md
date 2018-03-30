@@ -6,5 +6,11 @@
 <span style="color:#fe611e">color:#fe611e</span>
 <span style="color:#fec715">color:#fec715</span>
 
+## Websockets
+
+### Push Server
+
+Run:
+`$ php src/SiteBundle/Util/push_server.php`
 
 

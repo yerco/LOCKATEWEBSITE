@@ -14,6 +14,11 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
+# Esto está causando problemas
+#    SiteBundle\:
+#        resource: '../../src/SiteBundle/*'
+#        exclude: '../../src/SiteBundle/{Entity,Repository,Tests}'
+
 #    # makes classes in src/AppBundle available to be used as services
 #    # this creates a service per class whose id is the fully-qualified class name
 #    AppBundle\:
@@ -33,3 +38,12 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    # https://stackoverflow.com/questions/47743626/symfony-3-4-logger-service?rq=1
+    logger:
+        alias: 'monolog.logger'
+        public: true
+
+    security.encoder_factory:
+        alias: 'security.encoder_factory.generic'
+        public: true

@@ -5,3 +5,8 @@ lockate_site_homepage:
 lockate_site_logged:
     path: /site
     defaults: { _controller: SiteBundle:Site:inside }
+
+lockate_site_datareceiver:
+    path: /site/v1/datareceiver
+    defaults: { _controller: SiteBundle:Site:dataReceiver }
+    methods: [POST]
