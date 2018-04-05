@@ -14,3 +14,9 @@ Run:
 `$ php src/SiteBundle/Util/push_server.php`
 
 
+### Test environment
+
+Values:
+- Binds to `tcp://127.0.0.1:7777`
+- Port `0.0.0.0:8099`
+

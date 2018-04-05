@@ -3,21 +3,60 @@
 <head>
     <title>Lock-8 website</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
 </head>
 <body>
 {% block body %}
 
-    {#<script src="{{ asset('js/main.js') }}"></script>#}
-    <script src="{{ asset('js/autobahn.js') }}"></script>
-    <script src="{{ asset('js/client_side.js') }}"></script>
-    <script src="{{ asset('js/d3.v4.min.js') }}"></script>
+    <div class="container">
+        <div id="row">
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+            {% else %}
+                Not logged and here talk to developer please
+            {% endif %}
+        </div>
+        <div id="row">
+            Phones around
+        </div>
+        <div id="row center-block">
+            <div class="col-xs-8">
+                <canvas id="mycanvas" width="600" height="400"></canvas>
+            </div>
+            <div class="col-xs-4">
+                <div class="row center-block">
+                    <p>Phones around</p>
+                </div>
+                <div class="row center-block">
+                    <p id="phones-around">--</p>
+                </div>
+                <div class="row center-block">
+                    <p>Phones detected</p>
+                </div>
+                <div class="row center-block">
+                    <p id="phones-detected">--</p>
+                </div>
+                <div class="row center-block">
+                    <p>Gateway Time</p>
+                </div>
+                <div class="row center-block">
+                    <p id="gateway-time">--</p>
+                </div>
+                <div class="row center-block">
+                    <p>Node Time</p>
+                </div>
+                <div class="row center-block">
+                    <p id="node-time">--</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {% if is_granted('ROLE_USER') %}
-        <a href="{{ path('fos_user_security_logout') }}">Logout</a>
-    {% else %}
-        Not logged and here talk to developer please
-    {% endif %}
-    Site
+    <script src="{{ asset('js/autobahn.js') }}"></script>
+    {#<script src="{{ asset('js/d3.v4.min.js') }}"></script>#}
+    <script src="{{ asset('js/smoothie.js') }}"></script>
+    <script src="{{ asset('js/client_side.js') }}"></script>
 
 {% endblock %}
 </body>
