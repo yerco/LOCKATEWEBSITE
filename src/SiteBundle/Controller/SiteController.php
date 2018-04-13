@@ -163,33 +163,6 @@ class SiteController extends Controller
         }
         /// End Verification
 
-        /*
-            $request_json_content = json_decode($request->getContent());
-
-            if ($request_json_content->gateway_record) {
-                $entry_data = array(
-                    'category' => 'gateway_record',
-                    'packet' => $request_json_content->gateway_record,
-                    'article' => 'articulo',
-                    'when' => time()
-                );
-                $logger = $this->container->get('logger');
-                $context = new ZMQContext();
-                $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, "my pusher");
-                $socket->connect("tcp://localhost:5555");
-
-                $logger->info("Records sent .");
-                // pay attention to this name `gateway_id`
-                // (it's same at ReceiverPusher `onNewData`
-
-                //var_dump($request_json_content);
-                $socket->send(json_encode(
-                        $entry_data
-                    )
-                );
-            }
-        */
-
         return new JsonResponse(array(
                 "message" => "data received " . time()
             )
