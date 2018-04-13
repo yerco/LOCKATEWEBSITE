@@ -117,7 +117,9 @@ class SiteController extends Controller
             $logger = $this->container->get('logger');
             $context = new ZMQContext();
             $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, "my pusher");
-            $socket->connect("tcp://localhost:5555");
+            //$socket->connect("tcp://localhost:5555");
+            //$socket->connect("tcp://127.0.0.1:5555");
+            $socket->connect("tcp://188.166.11.160:5555");
 
             $logger->info("Records sent .");
             // pay attention to this name `gateway_id`

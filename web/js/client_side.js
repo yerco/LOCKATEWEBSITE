@@ -3,7 +3,8 @@ var phonesAround;
 var gatewayTime;
 var nodeTime;
 
-var conn = new ab.Session('ws://localhost:8018',
+//var conn = new ab.Session('ws://localhost:8018',
+var conn = new ab.Session('ws://lockate.hopto.org:8018',
     function() {
         conn.subscribe('gateway_record', function(topic, data) {
             // add to DOM
