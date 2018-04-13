@@ -3,13 +3,14 @@ var phonesAround;
 var gatewayTime;
 var nodeTime;
 
-var conn = new ab.Session('ws://localhost:8018',
+//var conn = new ab.Session('ws://localhost:8018',
+var conn = new ab.Session('ws://lockate.hopto.org:8018',
     function() {
         conn.subscribe('gateway_record', function(topic, data) {
             // add to DOM
             packet = data.packet[0];
             //console.log(packet['gateway_id']);
-            //console.log(packet);
+            console.log(packet);
             //console.log(packet['node_record'][0]['timestamp']);
             //console.log(packet['node_record'][0]['node_summary']['phones_around']);
             timeData = packet['node_record'][0]['timestamp'];

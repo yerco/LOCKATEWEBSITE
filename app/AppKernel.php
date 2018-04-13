@@ -6,6 +6,14 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
+    // fix to work on production
+    // this problem: https://stackoverflow.com/questions/20743060/symfony2-and-date-default-timezone-get-it-is-not-safe-to-rely-on-the-system
+    public function __construct($environment, $debug)
+    {
+        date_default_timezone_set( 'Europe/Amsterdam' );
+        parent::__construct($environment, $debug);
+    }
+
     public function registerBundles()
     {
         $bundles = [
