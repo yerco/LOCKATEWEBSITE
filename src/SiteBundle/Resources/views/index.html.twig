@@ -3,21 +3,49 @@
 <head>
     <title>Lock-8 website</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+    <style>
+        body {
+            background-size: 100%;
+            background-origin: content;
+            background-repeat: repeat;
+        }
+    </style>
+    <style>
+        .btn {
+            background-color: #003035;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12ev;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .btn:hover, .btn:hover:active{
+            background-color: #001214;
+        }
+    </style>
 </head>
-<body>
-{% block body %}
-    <header class="header">
-        <ul class="navi">
-            {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('fos_user_security_logout') }}">Logout</a>
-                {% include '@Site/site.html.twig' %}
-            {% else %}
-                {% include '@FOSUser/Security/login_content.html.twig' %}
-            {% endif %}
-        </ul>
-    </header>
+<body background="{{- asset('images/tech2b.jpg') -}}">
+{%- block body -%}
+    {%- if is_granted('ROLE_USER') -%}
+        <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+    {%- else -%}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    {%- include '@FOSUser/Security/login_content.html.twig' -%}
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
 
-    Lock-8 ;)
+    <br/>Lock-8 ;)
 
 {% endblock %}
 </body>

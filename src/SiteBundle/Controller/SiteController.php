@@ -118,7 +118,9 @@ class SiteController extends Controller
             $context = new ZMQContext();
             $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, "my pusher");
             //$socket->connect("tcp://localhost:5555");
+            /* DEVELOPMENT */
             //$socket->connect("tcp://127.0.0.1:5555");
+            /* PRODUCTION */
             $socket->connect("tcp://188.166.11.160:5555");
 
             $logger->info("Records sent .");
