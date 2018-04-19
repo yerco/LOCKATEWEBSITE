@@ -1,5 +1,6 @@
 var timeData;
 var phonesAround;
+var phonesDetected;
 var gatewayTime;
 var nodeTime;
 
@@ -34,20 +35,3 @@ var conn = new ab.Session('ws://lockate.hopto.org:8018',
 
 console.log("eventual thing happening");
 
-var smoothie = new SmoothieChart({
-    grid:{millisPerLine:60000},
-    timestampFormatter:SmoothieChart.timeFormatter,
-    millisPerPixel:300
-});
-smoothie.streamTo(document.getElementById("mycanvas"));
-
-var line1 = new TimeSeries();
-
-setInterval(function() {
-    //line1.append(timeData, phonesAround);
-    line1.append(timeData + '000', phonesAround);
-    //line2.append(new Date().getTime(), Math.random());
-}, 60000);
-
-// Add to SmoothieChart
-smoothie.addTimeSeries(line1);
