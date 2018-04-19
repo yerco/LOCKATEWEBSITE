@@ -3,8 +3,8 @@ var devUrl = "http://localhost:81";
 
 function requestHandler(limit) { //(callback) {
     'use strict';
-    //var url = devUrl + "/api/v1/lastgatewayevents/1/" + limit;
-    var url = prodUrl + "/api/v1/lastgatewayevents/1/" + limit;
+    var url = devUrl + "/api/v1/lastgatewayevents/1/" + limit;
+    //var url = prodUrl + "/api/v1/lastgatewayevents/1/" + limit;
     return new Promise( function(resolve, reject) {
         var request = new XMLHttpRequest();
         request.open('GET', url, true);
@@ -183,12 +183,15 @@ function addGraphWrapper(data, startBrush, endBrush) {
 // addGraphWrapper();
 console.log("lineWithFocus stuff");
 
-var limit = 10;
+// run just the first loading
+var limit = 100;
+var downwardLimit = Math.ceil(limit * 0.7);
+var upperLimit = Math.floor(limit * 0.8);
 requestHandler(limit).then(function(e) {
     var data = adaptData(JSON.parse(e.target.response));
     data[0].values = data[0].values.reverse();
-    var startBrush = data[0].values[3].x;
-    var endBrush = data[0].values[8].x;
+    var startBrush = data[0].values[downwardLimit].x;
+    var endBrush = data[0].values[upperLimit].x;
     addGraphWrapper(data, startBrush, endBrush);
 }, function() {
     console.log("Error");

@@ -92,7 +92,9 @@ describe('Line with focus', function() {
         });
 
         it('should make a graph with example sort of data', function() {
-            var limit = 10;
+            var limit = 100;
+            var downwardLimit = Math.ceil(limit * 0.7);
+            var upperLimit = Math.floor(limit * 0.8);
             requestHandler(limit).then(function(e) {
                 //console.log(e);
                 //console.log(e.target.response);
@@ -101,8 +103,8 @@ describe('Line with focus', function() {
                 var data = adaptData(JSON.parse(e.target.response));
                 data[0].values = data[0].values.reverse();
                 //console.log
-                var startBrush = data[0].values[3].x;
-                var endBrush = data[0].values[9].x;
+                var startBrush = data[0].values[downwardLimit].x;
+                var endBrush = data[0].values[upperLimit].x;
                 addGraphWrapper(data, startBrush, endBrush);
                 //expect(e).not.to.be.empty;
             }, function() {

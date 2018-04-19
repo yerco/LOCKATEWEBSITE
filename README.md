@@ -13,6 +13,7 @@ and development
 - **src/SiteBundle/Controller/SiteController.php**
     - `$socket->connect("tcp://127.0.0.1:5555");` dev
     - `$socket->connect("tcp://<IP HOST>:5555");` prod
+    - NEW: `parameters.yml` now has an environment value, still testing it.
 - **web/js/client_side.js**
     - `var conn = new ab.Session('ws://localhost:8018',` dev
     - `var conn = new ab.Session('ws://<IP HOST>:8018',` prod

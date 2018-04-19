@@ -55,7 +55,6 @@ class SiteController extends Controller
             'csrf_token' => $csrfToken,
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         );
-
         // kept here to remember syntax which includes `@`
         return $this->render('@Site/index.html.twig', $data);
     }
@@ -63,6 +62,12 @@ class SiteController extends Controller
     // The logic of this link was deleted, link left here for eventual
     // future reference
     // https://stackoverflow.com/questions/11506155/how-to-redirect-to-different-url-based-on-roles-in-symfony-2
+    /**
+     * This action pushes the data to the website using the websocket
+     * @param Request $request
+     *
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function insideAction(Request $request)
     {
         $_username = $request->getUser();
@@ -118,11 +123,14 @@ class SiteController extends Controller
             $context = new ZMQContext();
             $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, "my pusher");
             //$socket->connect("tcp://localhost:5555");
-            /* DEVELOPMENT */
-            //$socket->connect("tcp://127.0.0.1:5555");
-            /* PRODUCTION */
-            $socket->connect("tcp://188.166.11.160:5555");
-
+            if ($this->getParameter('environment') == 'dev') {
+                /* DEVELOPMENT */
+                $socket->connect("tcp://127.0.0.1:5555");
+            }
+            if ($this->getParameter('environment') == 'prod') {
+                /* PRODUCTION */
+                $socket->connect("tcp://188.166.11.160:5555");
+            }
             $logger->info("Records sent .");
             // pay attention to this name `gateway_id`
             // (it's same at ReceiverPusher `onNewData`
@@ -135,7 +143,8 @@ class SiteController extends Controller
         }
 
         return new JsonResponse(array(
-                "message" => "received at " . time()
+                "message" => "received at " . time(),
+                "environment"   => $this->getParameter('environment')
             )
         );
     }
