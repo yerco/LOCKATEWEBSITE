@@ -39,6 +39,7 @@ var conn = new ab.Session('ws://lockate.hopto.org:8018',
             }, function() {
                 console.log("Error");
             });
+
         });
     },
     function() {
