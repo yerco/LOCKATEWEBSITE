@@ -25,6 +25,20 @@ var conn = new ab.Session('ws://lockate.hopto.org:8018',
             document.getElementById("phones-detected").innerHTML = phonesDetected;
             document.getElementById("gateway-time").innerHTML = gatewayTime;
             document.getElementById("node-time").innerHTML = nodeTime;
+
+            /* graph  nvd3 */
+            var limit = 100;
+            var downwardLimit = Math.ceil(limit * 0.7);
+            var upperLimit = Math.floor(limit * 0.8);
+            requestHandler(limit).then(function(e) {
+                var data = adaptData(JSON.parse(e.target.response));
+                data[0].values = data[0].values.reverse();
+                var startBrush = data[0].values[downwardLimit].x;
+                var endBrush = data[0].values[upperLimit].x;
+                addGraphWrapper(data, startBrush, endBrush);
+            }, function() {
+                console.log("Error");
+            });
         });
     },
     function() {
