@@ -17,7 +17,7 @@ security:
             security: false
 
         main:
-            anonymous: ~
+            anonymous:    ~
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
@@ -39,7 +39,7 @@ security:
                 secret: '%secret%'
 
             logout:       ~
-            anonymous:    ~
+
 
     encoders:
         SiteBundleEntity\User: bcrypt

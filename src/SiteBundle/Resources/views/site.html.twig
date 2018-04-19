@@ -59,12 +59,14 @@
                                 <a onclick="renderChart('Voltage_3', 'chart1_data3.json', '2016-10-24', '2016-10-26', '#chart1')" style="cursor:pointer;">Voltage Phase 3</a> |
                             </div>
                             {# aca va el mono #}
-                            <div id="show_wrapper" class="col-xs-12 col-lg-12">
-                                <div id="chart1" class='chart centering'>
+                            {#<div id="show_wrapper" class="col-xs-12 col-lg-12">#}
+                                {#<div id="chart" class='with-3d-shadow with-transitions'>#}
                                     {#<svg></svg>#}
-                                    <canvas id="mycanvas" width="500" height="300"></canvas>
+                                {#</div>#}
+                                <div id="chart" class='chart'>
+                                    <svg></svg>
                                 </div>
-                            </div><!--/.col-xs-12.col-lg-12-->
+                            {#</div><!--/.col-xs-12.col-lg-12-->#}
                         </div> <!--row-->
 
 
@@ -92,10 +94,14 @@
         </div> {# /.row #}
     </div>
 
+    <link href="{{- asset('css/nv.d3.css') -}}" rel="stylesheet" />
     <script src="{{- asset('js/autobahn.js') -}}"></script>
     {#<script src="{{ asset('js/d3.v4.min.js') }}"></script>#}
     <script src="{{- asset('js/smoothie.js') -}}"></script>
     <script src="{{- asset('js/client_side.js') -}}"></script>
-
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/d3.min.js') }}"></script>
+    <script src="{{ asset('js/nv.d3.js') }}"></script>
+    <script src="{{ asset('js/lineWithFocus.js') }}"></script>
 {%- endblock -%}
 
