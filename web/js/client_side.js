@@ -5,9 +5,9 @@ var gatewayTime;
 var nodeTime;
 
 /* DEVELOPMENT */
-//var conn = new ab.Session('ws://localhost:8018',
+var conn = new ab.Session('ws://localhost:8018',
 /* PRODUCTION */
-var conn = new ab.Session('ws://lockate.hopto.org:8018',
+//var conn = new ab.Session('ws://lockate.hopto.org:8018',
     function() {
         conn.subscribe('gateway_record', function(topic, data) {
             // add to DOM
@@ -27,9 +27,10 @@ var conn = new ab.Session('ws://lockate.hopto.org:8018',
             document.getElementById("node-time").innerHTML = nodeTime;
 
             /* graph  nvd3 */
-            var limit = 100;
+            var limit = 10;
             var downwardLimit = Math.ceil(limit * 0.7);
-            var upperLimit = Math.floor(limit * 0.8);
+            // `limit - 1` last element of the array
+            var upperLimit = Math.floor(limit - 1);
             requestHandler(limit).then(function(e) {
                 var data = adaptData(JSON.parse(e.target.response));
                 data[0].values = data[0].values.reverse();

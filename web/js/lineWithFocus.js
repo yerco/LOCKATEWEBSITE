@@ -184,11 +184,13 @@ function addGraphWrapper(data, startBrush, endBrush) {
 console.log("lineWithFocus stuff");
 
 // run just the first loading
-var limit = 100;
+var limit = 10;
 var downwardLimit = Math.ceil(limit * 0.7);
-var upperLimit = Math.floor(limit * 0.8);
+// `limit - 1` last element of the array
+var upperLimit = limit - 1;//Math.floor(limit * 0.8);
 requestHandler(limit).then(function(e) {
     var data = adaptData(JSON.parse(e.target.response));
+    console.log(data);
     data[0].values = data[0].values.reverse();
     var startBrush = data[0].values[downwardLimit].x;
     var endBrush = data[0].values[upperLimit].x;
