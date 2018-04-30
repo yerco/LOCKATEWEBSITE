@@ -184,3 +184,7 @@ http://hexcolor16.com/005f6a
     height: 40rem;
 }
 
+/* tooltip offset */
+.nvtooltip {
+    margin-top: 50rem;
+}
