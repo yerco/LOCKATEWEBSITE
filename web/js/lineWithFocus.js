@@ -1,10 +1,10 @@
 var prodUrl = "http://lockate.hopto.org:81";
-var devUrl = "http://localhost:81";
+//var devUrl = "http://localhost:81";
 
 function requestHandler(limit) { //(callback) {
     'use strict';
-    var url = devUrl + "/api/v1/lastgatewayevents/1/" + limit;
-    //var url = prodUrl + "/api/v1/lastgatewayevents/1/" + limit;
+    //var url = devUrl + "/api/v1/lastgatewayevents/1/" + limit;
+    var url = prodUrl + "/api/v1/lastgatewayevents/1/" + limit;
     return new Promise( function(resolve, reject) {
         var request = new XMLHttpRequest();
         request.open('GET', url, true);
@@ -147,7 +147,7 @@ function addGraphWrapper(data, startBrush, endBrush) {
         // chart.xAxis.tickFormat(d3.format(',f')).axisLabel("Stream - 3,128,.1");
         chart.xAxis.tickFormat(
             function (d) {
-                return d3.time.format('%d-%b %H:%M:%S')(new Date(d));
+                return d3.time.format('%d-%b %H:%M')(new Date(d));
             }
         )
             .axisLabel("Stream dd");
@@ -156,7 +156,7 @@ function addGraphWrapper(data, startBrush, endBrush) {
         // chart.x2Axis.tickFormat(d3.format(',f'));
         chart.x2Axis.tickFormat(
             function (d) {
-                return d3.time.format('%d-%b %H:%M:%S')(new Date(d));
+                return d3.time.format('%d-%b %H:%M')(new Date(d));
             }
         )
             .axisLabel("Stream dd");
@@ -187,7 +187,7 @@ console.log("lineWithFocus stuff");
 var limit = 10;
 var downwardLimit = Math.ceil(limit * 0.7);
 // `limit - 1` last element of the array
-var upperLimit = limit - 1;//Math.floor(limit * 0.8);
+var upperLimit = limit - 1;
 requestHandler(limit).then(function(e) {
     var data = adaptData(JSON.parse(e.target.response));
     console.log(data);

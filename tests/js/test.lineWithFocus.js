@@ -11,9 +11,9 @@ describe('Line with focus', function() {
             });
         });
 
-        xit('should have a function to transform Dates to timestamps', function() {
+        it('should have a function to transform Dates to timestamps', function() {
             var dateSampleString = "Wed Apr 18 2018 15:10:31 GMT+0200 (CEST)";
-            var dateSampleTimestamp = 1524057031; // with millis '1524064231000
+            var dateSampleTimestamp = 1524057031000; // without millis '1524064231
             var timestamp = datestringToTimestamp(dateSampleString);
             expect(timestamp).to.be.equal(dateSampleTimestamp);
         });
@@ -91,7 +91,7 @@ describe('Line with focus', function() {
             expect(megaPacket).to.deep.equal(graphPacketSample);
         });
 
-        it('should make a graph with example sort of data', function() {
+        xit('should make a graph with example sort of data', function() {
             var limit = 100;
             var downwardLimit = Math.ceil(limit * 0.7);
             var upperLimit = Math.floor(limit * 0.8);

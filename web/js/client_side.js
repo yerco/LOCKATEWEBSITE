@@ -40,6 +40,7 @@ var conn = new ab.Session('ws://localhost:8018',
             }, function() {
                 console.log("Error");
             });
+
         });
     },
     function() {
