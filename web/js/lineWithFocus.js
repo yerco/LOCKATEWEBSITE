@@ -1,10 +1,10 @@
-var prodUrl = "http://lockate.hopto.org:81";
-//var devUrl = "http://localhost:81";
+//var prodUrl = "http://lockate.hopto.org:81";
+var devUrl = "http://localhost:81";
 
 function requestHandler(limit) { //(callback) {
     'use strict';
-    //var url = devUrl + "/api/v1/lastgatewayevents/1/" + limit;
-    var url = prodUrl + "/api/v1/lastgatewayevents/1/" + limit;
+    var url = devUrl + "/api/v1/lastgatewayevents/1/" + limit;
+    //var url = prodUrl + "/api/v1/lastgatewayevents/1/" + limit;
     return new Promise( function(resolve, reject) {
         var request = new XMLHttpRequest();
         request.open('GET', url, true);
