@@ -17,8 +17,8 @@ var conn = new ab.Session('ws://localhost:8018',
             //console.log(packet['node_record'][0]['timestamp']);
             //console.log(packet['node_record'][0]['node_summary']['phones_around']);
             timeData = packet['node_record'][0]['timestamp'];
-            phonesAround = packet['node_record'][0]['node_summary']['phones_around'];
-            phonesDetected = packet['node_record'][0]['node_summary']['phones_detected'];
+            phonesAround = packet['node_record'][0]['node_summary']['phones_around_now'];
+            phonesDetected = packet['node_record'][0]['node_summary']['phones_detected_hour'];
             gatewayTime = new Date(packet['timestamp'] * 1000);
             nodeTime = new Date(packet['node_record'][0]['timestamp'] * 1000);
             document.getElementById("phones-around").innerHTML = phonesAround;
