@@ -80,8 +80,8 @@ function adaptData(packet) {
         if (packetKeys.indexOf(packet[value]["gateway_id"]) === -1) {
             packetKeys.push(packet[value]["gateway_id"]);
             //console.log(packet[value]["gateway_timestamp"]["date"]);
-            xValue = datestringToTimestamp(packet[value]["gateway_timestamp"]["date"])
-            yValue = packet[value]["node_summary"]["phones_around"];
+            xValue = datestringToTimestamp(packet[value]["gateway_timestamp"]["date"]);
+            yValue = packet[value]["node_summary"]["phones_around_now"];
             //yValue = packet[value]["node_summary"]["phones_detected"];
             key = "Gateway" + packet[value]["gateway_id"];
             packetToGraph.key = key;
@@ -93,8 +93,8 @@ function adaptData(packet) {
         else { // already caught gateway ID
             // timestamps come in format like `date: "2018-04-17 08:35:54.000000"`
             // we need timestamps
-            xValue = datestringToTimestamp(packet[value]["gateway_timestamp"]["date"])
-            yValue = packet[value]["node_summary"]["phones_around"];
+            xValue = datestringToTimestamp(packet[value]["gateway_timestamp"]["date"]);
+            yValue = packet[value]["node_summary"]["phones_around_now"];
             //yValue = packet[value]["node_summary"]["phones_detected"];
             packetToGraph.values.push({
                 x: xValue, //d3.time.format.utc("%d %b, %H:%M")(newNow),
