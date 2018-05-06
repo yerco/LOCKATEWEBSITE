@@ -3,6 +3,15 @@
 This site receives request from a counterpart API which stores data sent
 by sensors (through their gateways)
 
+## Dependencies
+```
+sudo apt-get install libzmq-dev
+sudo apt-get install php-zmq
+
+```
+
+
+
 ## Important Production and Development changes
 
 File which need modifications (comment out lines) when switching from production
