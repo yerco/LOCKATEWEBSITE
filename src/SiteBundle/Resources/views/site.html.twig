@@ -12,16 +12,16 @@
                     <span class="anchor" id="group1"></span>
                     <div class="row row-striped" style="">
                         <div class="col-xs-12 col-lg-12">
-                            <h2 style="display: inline-block; padding:10px 0 0 0"><b>Overall View</b></h2>
+                            <h2 style="display: inline-block; padding:10px 0 0 0"><b>Overview: Node 1</b></h2>
                             <span><input type="submit" id="calculate0" class="btn-xs btn-success "  name="boton" value="Back to Top" style="background-color: #003035; border-color: #001214; position: absolute; right: 30px; margin-top:10px;"/></span>
                             <p>Phone monitoring consolidated summary - project total nodes.</p>
                             <hr><br>
                         </div>{# /.col-xs-12.col-lg-12 #}
                         <div class="col-xs-12 col-lg-12">
-                            {# Panel 1L #}
+                            {# Panel 1.1 #}
                             <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
                                 <div class="panel panel-info centering">
-                                    <div class="panel-heading"><b>Phones around now</b></div>
+                                    <div class="panel-heading"><b>Phones Around<br>Now</b></div>
                                     <div class="panel-body">
                                         <p id="phones-around" style="font-size:40px; font-weight: 200;">
                                             0
@@ -32,11 +32,26 @@
                                         <p id="node-time" style="font-size:0.7rem; font-weight: 200;"></p>
                                     </div>
                                 </div>
-                            </div>{# /.Panel 1L #}
-                            {# Panel 1R #}
+                            </div>{# /.Panel 1.1 #}
+                            {# Panel 1.2 #}
                             <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
                                 <div class="panel panel-info centering">
-                                    <div class="panel-heading"><b>Phones detected hour</b></div>
+                                    <div class="panel-heading"><b>Phones Around<br>Last Hour Average</b></div>
+                                    <div class="panel-body">
+                                        <p id="phones-around-hour" style="font-size:40px; font-weight: 200;">
+                                            0
+                                        </p>
+                                        <p>
+                                            <a class="btn btn-default" href="#" role="button">KPI Details &raquo;</a>
+                                        </p>
+                                        <p id="node-time" style="font-size:0.7rem; font-weight: 200;"></p>
+                                    </div>
+                                </div>
+                            </div>{# /.Panel 1.2 #}
+                            {# Panel 1.3 #}
+                            <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                                <div class="panel panel-info centering">
+                                    <div class="panel-heading"><b>Phones Detected<br> Cumulative Last Hour</b></div>
                                     <div class="panel-body">
                                         <p id="phones-detected" style="font-size:40px; font-weight: 200;">
                                             0
@@ -47,16 +62,35 @@
                                         <p id="gateway-time" style="font-size:0.7rem; font-weight: 200;"></p>
                                     </div>
                                 </div>
-                            </div>{# /.Panel 1R #}
+                            </div>{# /.Panel 1.3 #}
+                            {# Panel 1.4 #}
+                            <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                                <div class="panel panel-info centering">
+                                    <div class="panel-heading"><b>Phones Detected<br> Cumulative Today</b></div>
+                                    <div class="panel-body">
+                                        <p id="phones-detected-today" style="font-size:40px; font-weight: 200;">
+                                            0
+                                        </p>
+                                        <p>
+                                            <a class="btn btn-default" href="#" role="button">KPI Details &raquo;</a>
+                                        </p>
+                                        <p id="gateway-time" style="font-size:0.7rem; font-weight: 200;"></p>
+                                    </div>
+                                </div>
+                            </div>{# /.Panel 1.4 #}
+
+
+
                         </div> <!--row-->
 
                         <div class="col-xs-12 col-lg-12">
                             <h4><b>Historical Variable Charts </b></h4>
                             <p>Select the variable to visualize:</p>
                             <div class="examplelinks chartlinks">
-                                <a onclick="renderChart('Voltage_1', 'chart1_data.json', '2016-10-15', '2016-10-26', '#chart1')" style="cursor:pointer;">Voltage Phase 1</a> |
-                                <a onclick="renderChart('Voltage_2', 'chart1_data2.json', '2016-10-16', '2016-10-17', '#chart1')" style="cursor:pointer;">Voltage Phase 2</a> |
-                                <a onclick="renderChart('Voltage_3', 'chart1_data3.json', '2016-10-24', '2016-10-26', '#chart1')" style="cursor:pointer;">Voltage Phase 3</a> |
+                                <a onclick="renderChart('Voltage_1', 'chart1_data.json', '2016-10-15', '2016-10-26', '#chart1')" style="cursor:pointer;">Phones Around Instantaneous</a> |
+                                <a onclick="renderChart('Voltage_2', 'chart1_data2.json', '2016-10-16', '2016-10-17', '#chart1')" style="cursor:pointer;">Phones Around Last Hour Average</a> |
+                                <a onclick="renderChart('Voltage_3', 'chart1_data3.json', '2016-10-24', '2016-10-26', '#chart1')" style="cursor:pointer;">Phones Detected Hour</a> |
+                                <a onclick="renderChart('Voltage_4', 'chart1_data3.json', '2016-10-24', '2016-10-26', '#chart1')" style="cursor:pointer;">Phones Detected Today</a> |
                             </div>
                             {# aca va el mono #}
                             {#<div id="show_wrapper" class="col-xs-12 col-lg-12">#}
@@ -80,15 +114,15 @@
             <div class="col-xs-6 col-sm-2 col-sm-pull-10 sidebar-offcanvas" id="sidebar">
                 <div class="list-group">
                     <a href="#" class="list-group-item active">Indicators</a>
-                    <a href="#group1" class="list-group-item">Overall View</a>
-                    <a href="#group2" class="list-group-item">Node #001</a>
-                    <a href="#group3" class="list-group-item">Node #002</a>
-                    <a href="#" class="list-group-item">Node #003</a>
-                    <a href="#" class="list-group-item">Node #004</a>
-                    <a href="#" class="list-group-item">Node #005</a>
-                    <a href="#" class="list-group-item">Node #006</a>
-                    <a href="#" class="list-group-item">Node #007</a>
-                    <a href="#" class="list-group-item">Node #008</a>
+                    <a href="#group1" class="list-group-item">Node 1</a>
+                    <a href="#group2" class="list-group-item">Node 2</a>
+                    <a href="#group3" class="list-group-item">Node 3</a>
+                    <a href="#" class="list-group-item">Node 4</a>
+                    <a href="#" class="list-group-item">Node 5</a>
+                    <a href="#" class="list-group-item">Node 5</a>
+                    <a href="#" class="list-group-item">Node 6</a>
+                    <a href="#" class="list-group-item">Node 7</a>
+                    <a href="#" class="list-group-item">Node 8</a>
                 </div>
             </div>{# /.sidebar-offcanvas #}
         </div> {# /.row #}
