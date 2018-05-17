@@ -1,10 +1,11 @@
 var prodUrl = "http://lockate.hopto.org:81";
 //var devUrl = "http://localhost:81";
+var specificGraphData = [];
 
 function requestHandler(limit) { //(callback) {
     'use strict';
-    //var url = devUrl + "/api/v1/lastgatewayevents/1/" + limit;
-    var url = prodUrl + "/api/v1/lastgatewayevents/1/" + limit;
+    //var url = devUrl + "/api/v1/lastgatewaynodesevents/1/1/" + limit;
+    var url = prodUrl + "/api/v1/lastgatewaynodesevents/1/1/" + limit;
     return new Promise( function(resolve, reject) {
         var request = new XMLHttpRequest();
         request.open('GET', url, true);
@@ -45,14 +46,15 @@ function requestHandler(limit) { //(callback) {
 //     });
 
 /**
+ * Assuming GMT dateString
  *
- * @param dateString - string ex: "Wed Apr 18 2018 15:10:31 GMT+0200 (CEST)"
- * @returns {number} - int ex (above example 1524057031)
+ * @param dateString - string ex: "Wed Apr 18 2018 15:10:31"
+ * @returns {number} - int ex (above example 1524064231)
  */
 function datestringToTimestamp(dateString) {
     'use strict';
     var date = new Date(dateString);
-    var timestampMillis = date.getTime();
+    var timestampMillis = date.getTime() - (date.getTimezoneOffset() * 1000 * 60);
     var timeStamp = timestampMillis;// / 1000;
     return timeStamp
 }
@@ -60,52 +62,83 @@ function datestringToTimestamp(dateString) {
 function adaptData(packet) {
     'use strict';
     //var time = packet[value]['gateway_timestamp']['date']
-    // var that keeps x(s) and y(s)
-    var values = [];
-    var packetKeys =  [];
     var xValue, yValue;
     var key;
-    var megaPacket = [];
     var packetToGraph = {
-        key: "",
-        area: false,
-        values: []
+        "phones_around_now": {
+            key: "",
+            area: false,
+            values: []
+        },
+        "phones_around_hour_mean": {
+            key: "",
+            area: false,
+            values: []
+        },
+        "phones_detected_hour": {
+            key: "",
+            area: false,
+            values: []
+        },
+        "phones_detected_today": {
+            key: "",
+            area: false,
+            values: []
+        }
     };
+
     /**
      * BEWARE! this has been tested for just 1 gateway! (gateway_id = 1)
      */
+    //console.log(packet);
     for (var value in packet) {
-        //console.log(packet[value]);
-        // extract gateway ID
-        if (packetKeys.indexOf(packet[value]["gateway_id"]) === -1) {
-            packetKeys.push(packet[value]["gateway_id"]);
-            //console.log(packet[value]["gateway_timestamp"]["date"]);
-            xValue = datestringToTimestamp(packet[value]["gateway_timestamp"]["date"]);
-            yValue = packet[value]["node_summary"]["phones_around_now"];
-            //yValue = packet[value]["node_summary"]["phones_detected"];
-            key = "Gateway" + packet[value]["gateway_id"];
-            packetToGraph.key = key;
-            packetToGraph.values.push({
-                x: xValue, //d3.time.format.utc("%d %b, %H:%M")(newNow),
-                y: yValue
-            });
-        }
-        else { // already caught gateway ID
-            // timestamps come in format like `date: "2018-04-17 08:35:54.000000"`
-            // we need timestamps
-            xValue = datestringToTimestamp(packet[value]["gateway_timestamp"]["date"]);
-            yValue = packet[value]["node_summary"]["phones_around_now"];
-            //yValue = packet[value]["node_summary"]["phones_detected"];
-            packetToGraph.values.push({
-                x: xValue, //d3.time.format.utc("%d %b, %H:%M")(newNow),
-                y: yValue
-            });
+        // console.log(packet[value]["gateway_id_real"]);
+        // extract gateway ID (it's send in the request too)
+        //console.log(packet[value]["gateway_id_real"]);
+        if (packet[value]["gateway_id_real"]) {
+            key = "Gateway " + packet[value]["gateway_id_real"] + " - Node " +
+                packet[value]["node_id_real"];
+            // filling keys
+            packetToGraph["phones_around_now"].key = key;
+            packetToGraph["phones_around_hour_mean"].key = key;
+            packetToGraph["phones_detected_hour"].key = key;
+            packetToGraph["phones_detected_today"].key = key;
 
+            // phones_around_now
+            xValue = datestringToTimestamp(packet[value]["node_timestamp"]["date"]);
+            yValue = packet[value]["node_summary"]["phones_around_now"];
+            packetToGraph["phones_around_now"].values.push(
+                {x: xValue, y: yValue}
+            );
+            // time (xValue) is the same for the whole lecture
+            // phones_around_hour_mean
+            yValue = packet[value]["node_summary"]["phones_around_hour_mean"];
+            packetToGraph["phones_around_hour_mean"].values.push(
+                {x: xValue, y: yValue}
+            );
+            // phones_detected_hour
+            yValue = packet[value]["node_summary"]["phones_detected_hour"];
+            packetToGraph["phones_detected_hour"].values.push(
+                {x: xValue, y: yValue}
+            );
+            // phones_detected_today
+            yValue = packet[value]["node_summary"]["phones_detected_today"];
+            packetToGraph["phones_detected_today"].values.push(
+                {x: xValue, y: yValue}
+            );
+            /* old way
+            packetToGraph.values.push({
+                x: xValue, //d3.time.format.utc("%d %b, %H:%M")(newNow),
+                y: yValue
+            });
+            */
+        }
+        else { // problem big time - No gateway_id
+            console.log("Problems no gateway_id detected");
         }
     }
-    megaPacket.push(packetToGraph);
-
-    return megaPacket;
+    //console.log(packetToGraph);
+    return packetToGraph;
 }
 
 var dummyData = [
@@ -134,6 +167,7 @@ function getRandomArbitrary(min, max) {
 }
 
 function addGraphWrapper(data, startBrush, endBrush) {
+    "use strict";
     nv.addGraph(function () {
         var chart = nv.models.lineWithFocusChart();
 
@@ -166,7 +200,8 @@ function addGraphWrapper(data, startBrush, endBrush) {
         chart.useInteractiveGuideline(true);
         // console.log("MEGA");
         // console.log(megaPacket);
-        d3.select('#chart svg')
+        d3.select("#chart svg")
+        //d3.select('#'+ chartDivId + ' ' + 'svg')
         //.datum(testData())
         //.datum(dummyData)
         //.datum(dummyData02)
@@ -175,26 +210,40 @@ function addGraphWrapper(data, startBrush, endBrush) {
             .call(chart);
 
         nv.utils.windowResize(chart.update);
-
         return chart;
     });
+}
+
+function renderChart(currentChart) {
+    "use strict";
+    //console.log(window.allData);
+    var limit = 100;
+    var downwardLimit = Math.ceil(limit * 0.7);
+    // `limit - 1` last element of the array
+    var upperLimit = Math.floor(limit - 1);
+    specificGraphData[0] = window.allData[currentChart];
+    // Reverse timestamps needs to be done just once
+    if (specificGraphData[0].values[0].x > specificGraphData[0].values[1].x) {
+        specificGraphData[0].values = specificGraphData[0].values.reverse();
+    }
+    //console.log("allData");
+    console.log(window.allData[currentChart]);
+    var startBrush = window.allData[currentChart].values[downwardLimit].x;
+    var endBrush = window.allData[currentChart].values[upperLimit].x;
+    //console.log("endbrush index: ",  window.allData[currentChart].values[upperLimit]);
+    addGraphWrapper(specificGraphData, startBrush, endBrush);
 }
 
 // addGraphWrapper();
 console.log("lineWithFocus stuff");
 
-// run just the first loading
-var limit = 10;
-var downwardLimit = Math.ceil(limit * 0.7);
-// `limit - 1` last element of the array
-var upperLimit = limit - 1;
+/** runs at first load **/
+var limit = 100;
 requestHandler(limit).then(function(e) {
-    var data = adaptData(JSON.parse(e.target.response));
-    console.log(data);
-    data[0].values = data[0].values.reverse();
-    var startBrush = data[0].values[downwardLimit].x;
-    var endBrush = data[0].values[upperLimit].x;
-    addGraphWrapper(data, startBrush, endBrush);
-}, function() {
-    console.log("Error");
-});
+        'use strict';
+        window.allData = adaptData(JSON.parse(e.target.response));
+        renderChart("phones_around_now");
+    }, function() {
+        console.log("Error");
+    }
+);
