@@ -6,8 +6,9 @@ var phonesDetectedToday;
 var gatewayTime;
 var nodeTime;
 var chartDivId = "chart";
-var currentChart = "phones_around_hour_mean";
 var phones_around_hour_mean = [];
+
+window.currentChart = "phones_around_now";
 
 /* DEVELOPMENT */
 var conn = new ab.Session('ws://localhost:8018',
@@ -43,7 +44,7 @@ var conn = new ab.Session('ws://localhost:8018',
             }
 
             /* graph  nvd3 */
-            var limit = 10;
+            var limit = 100;
             var downwardLimit = Math.ceil(limit * 0.7);
             // `limit - 1` last element of the array
             var upperLimit = Math.floor(limit - 1);
@@ -57,7 +58,7 @@ var conn = new ab.Session('ws://localhost:8018',
                 var startBrush = window.allData[currentChart].values[downwardLimit].x;
                 var endBrush = window.allData[currentChart].values[upperLimit].x;
                 //console.log(allData);
-                renderChart("phones_around_now");
+                renderChart(window.currentChart);
                 //addGraphWrapper(specificGraphData, startBrush, endBrush);
             }, function() {
                 console.log("Error");

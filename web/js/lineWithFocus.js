@@ -216,6 +216,7 @@ function addGraphWrapper(data, startBrush, endBrush) {
 
 function renderChart(currentChart) {
     "use strict";
+    window.currentChart = currentChart;
     //console.log(window.allData);
     var limit = 100;
     var downwardLimit = Math.ceil(limit * 0.7);
@@ -230,10 +231,6 @@ function renderChart(currentChart) {
     console.log(window.allData[currentChart]);
     var startBrush = window.allData[currentChart].values[downwardLimit].x;
     var endBrush = window.allData[currentChart].values[upperLimit].x;
-    console.log("startbrush: " + startBrush);
-    console.log("endbrush: " + endBrush);
-    //console.log("endbrush index: ",  window.allData[currentChart].values[upperLimit]);
-    console.log("cota baja: " + downwardLimit + " ; cota alta: " + upperLimit);
     addGraphWrapper(specificGraphData, startBrush, endBrush);
 }
 
