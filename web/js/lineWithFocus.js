@@ -1,7 +1,12 @@
 //var prodUrl = "http://lockate.hopto.org:81";
 var devUrl = "http://localhost:81";
 var specificGraphData = [];
-
+var graphLinks = [
+    "phones_around_now",
+    "phones_around_hour_mean",
+    "phones_detected_hour",
+    "phones_detected_today"
+];
 function requestHandler(limit) { //(callback) {
     'use strict';
     var url = devUrl + "/api/v1/lastgatewaynodesevents/1/1/" + limit;
@@ -217,7 +222,17 @@ function addGraphWrapper(data, startBrush, endBrush) {
 function renderChart(currentChart) {
     "use strict";
     window.currentChart = currentChart;
-    //console.log(window.allData);
+    // coloring active graph's link
+    graphLinks.forEach(function(clickedLink) {
+        if (clickedLink === currentChart) {
+            document.getElementById(clickedLink).style.backgroundColor="#d9edf7";
+            document.getElementById(clickedLink).style.fontWeight="bold";
+        }
+        else {
+            document.getElementById(clickedLink).style.backgroundColor="transparent";
+            document.getElementById(clickedLink).style.fontWeight="normal";
+        }
+    });
     var limit = 100;
     var downwardLimit = Math.ceil(limit * 0.7);
     // `limit - 1` last element of the array
