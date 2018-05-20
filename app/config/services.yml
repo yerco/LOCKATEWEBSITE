@@ -47,3 +47,8 @@ services:
     security.encoder_factory:
         alias: 'security.encoder_factory.generic'
         public: true
+
+    # locale sticky session
+    SiteBundle\EventSubscriber\LocaleSubscriber:
+        arguments: ['%kernel.default_locale%']
+

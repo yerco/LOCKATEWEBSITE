@@ -1,0 +1,96 @@
+<!--src/SiteBundle/Resources/translations/SiteBundle.es.xlf-->
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+        <body>
+            <!--Layout site-->
+            <trans-unit id="layout.timeline">
+                <source>Timeline</source>
+                <target>Línea de tiempo</target>
+            </trans-unit>
+            <trans-unit id="layout.indicators">
+                <source>Indicators</source>
+                <target>Indicadores</target>
+            </trans-unit>
+            <trans-unit id="layout.projects">
+                <source>Projects</source>
+                <target>Proyectos</target>
+            </trans-unit>
+            <trans-unit id="layout.smart-nodes">
+                <source>Smart-Nodes</source>
+                <target>Nodos-Inteligentes</target>
+            </trans-unit>
+            <trans-unit id="layout.profile">
+                <source>Profile</source>
+                <target>Perfil</target>
+            </trans-unit>
+
+            <!--Site page-->
+            <trans-unit id="site.overview">
+                <source>Overview</source>
+                <target>Visión General</target>
+            </trans-unit>
+            <trans-unit id="site.node">
+                <source>Node</source>
+                <target>Nodo</target>
+            </trans-unit>
+            <trans-unit id="site.phone-monitoring-summary">
+                <source>Phone monitoring consolidated summary</source>
+                <target>Monitoreo de teléfonos resumen</target>
+            </trans-unit>
+            <trans-unit id="site.project-total-nodes">
+                <source>project total nodes</source>
+                <target>número total de nodos</target>
+            </trans-unit>
+            <trans-unit id="site.phones-around-now">
+                <source>Phones Around Now</source>
+                <target>Teléfonos alrededor en estos instantes</target>
+            </trans-unit>
+            <trans-unit id="site.phones-around-last-hour-average">
+                <source>Phones Around Last Hour Average</source>
+                <target>Promedio de teléfonos alrededor en la última hora</target>
+            </trans-unit>
+            <trans-unit id="site.phones-detected-cumulative-last-hour">
+                <source>Phones Detected Cumulative Last Hour</source>
+                <target>Número acumulado de teléfonos en la última hora</target>
+            </trans-unit>
+            <trans-unit id="site.phones-detected-cumulative-today">
+                <source>Phones Detected Cumulative Today</source>
+                <target>Número acumulado de teléfonos detectados hoy</target>
+            </trans-unit>
+            <trans-unit id="site.kpi-details">
+                <source>KPI Details</source>
+                <target>KPI Detalles</target>
+            </trans-unit>
+            <trans-unit id="site.historical-variable-charts">
+                <source>Historical Variable Charts</source>
+                <target>Gráficos de variables históricos</target>
+            </trans-unit>
+            <trans-unit id="site.select-variable-to-visualize">
+                <source>Select the variable to visualize</source>
+                <target>Seleccione variable para visualización</target>
+            </trans-unit>
+            <trans-unit id="site.graph.phones-around-instantaneous">
+                <source>Phones Around Instantaneous</source>
+                <target>Teléfonos alrededor instantaneo</target>
+            </trans-unit>
+            <trans-unit id="site.graph.phones-around-last-hour-average">
+                <source>Phones Around Last Hour Average</source>
+                <target>Teléfonos alrededor promedio última hora</target>
+            </trans-unit>
+            <trans-unit id="site.graph.phones-detected-hour">
+                <source>Phones Detected Hour</source>
+                <target>Teléfonos detectados hora</target>
+            </trans-unit>
+            <trans-unit id="site.graph.phones-detected-today">
+                <source>Phones Detected Today</source>
+                <target>Teléfonos detectados hoy</target>
+            </trans-unit>
+            <trans-unit id="site.indocators">
+                <source>Indicators</source>
+                <target>Indicadores</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+
