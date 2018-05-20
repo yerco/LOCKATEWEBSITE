@@ -1,3 +1,4 @@
+{% trans_default_domain 'SiteBundle' %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,11 +32,11 @@
                     </div>
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="">Timeline</a></li>
-                            <li><a href="">Indicators</a></li>
-                            <li><a href="">Projects</a></li>
-                            <li><a href="">Smart-Nodes</a></li>
-                            <li><a href="">Profile</a></li>
+                            <li><a href="">{% trans %}Timeline{% endtrans %}</a></li>
+                            <li><a href="">{% trans %}Indicators{% endtrans %}</a></li>
+                            <li><a href="">{% trans %}Projects{% endtrans %}</a></li>
+                            <li><a href="">{% trans %}Smart-Nodes{% endtrans %}</a></li>
+                            <li><a href="">{% trans %}Profile{% endtrans %}</a></li>
                             <li>
                                 {%- if is_granted('ROLE_USER') -%}
                                     <a href="{{ path('fos_user_security_logout') }}">Logout</a>

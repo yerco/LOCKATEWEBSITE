@@ -24,9 +24,12 @@ class SiteController extends Controller
     public function indexAction(Request $request) {
         /** @var $session Session */
         $session = $request->getSession();
-
         $authErrorKey = Security::AUTHENTICATION_ERROR;
         $lastUsernameKey = Security::LAST_USERNAME;
+
+        if ($request->getLocale() != "en") {
+            $request->setLocale($request->getLocale());
+        }
 
         // get the error if any (works with forward and redirect -- see below)
         if ($request->attributes->has($authErrorKey)) {
@@ -77,7 +80,7 @@ class SiteController extends Controller
             return $this->render('@Site/site.html.twig');
         }
         if ($this->getUser() === null && $_username === null) {
-            return $this->redirect('/');
+            return $this->redirect('/'. $locale);
         }
 
         // if not login then receiving data on this endpoint
@@ -149,36 +152,4 @@ class SiteController extends Controller
         );
     }
 
-    public function dataReceiverAction(Request $request) {
-        $factory = $this->get('security.encoder_factory');
-        $user_manager = $this->get('fos_user.user_manager');
-        $_username = $request->getUser();
-        $_password = $request->getPassword();
-        $user = $user_manager->findUserByUsername($_username);
-        // Check if the user exists !
-        if(!$user){
-            return new Response(
-                'Username doesnt exists',
-                Response::HTTP_UNAUTHORIZED,
-                array('Content-type' => 'application/json')
-            );
-        }
-        /// Start verification
-        $encoder = $factory->getEncoder($user);
-        $salt = $user->getSalt();
-
-        if(!$encoder->isPasswordValid($user->getPassword(), $_password, $salt)) {
-            return new Response(
-                'Username or Password not valid.',
-                Response::HTTP_UNAUTHORIZED,
-                array('Content-type' => 'application/json')
-            );
-        }
-        /// End Verification
-
-        return new JsonResponse(array(
-                "message" => "data received " . time()
-            )
-        );
-    }
 }

@@ -2,11 +2,20 @@ lockate_site_homepage:
     path:     /
     defaults: { _controller: SiteBundle:Site:index }
 
+lockate_site_homepage_lang:
+    path:     /{_locale}
+    defaults: { _controller: SiteBundle:Site:index }
+    requirements:
+        _locale: '%app.locales%'
+
 lockate_site_logged:
     path: /site
     defaults: { _controller: SiteBundle:Site:inside }
+    prefix: /{_locale}
 
-lockate_site_datareceiver:
-    path: /site/v1/datareceiver
-    defaults: { _controller: SiteBundle:Site:dataReceiver }
-    methods: [POST]
+lockate_site_logged_lang:
+    path: /{_locale}/site
+    defaults: { _controller: SiteBundle:Site:inside }
+    requirements:
+        _locale: '%app.locales%'
+
