@@ -11,9 +11,9 @@ var phones_around_hour_mean = [];
 window.currentChart = "phones_around_now";
 
 /* DEVELOPMENT */
-//var conn = new ab.Session('ws://localhost:8018',
+var conn = new ab.Session('ws://localhost:8018',
 /* PRODUCTION */
-var conn = new ab.Session('ws://lockate.hopto.org:8018',
+//var conn = new ab.Session('ws://lockate.hopto.org:8018',
     function() {
         "use strict";
         conn.subscribe('gateway_record', function(topic, data) {
