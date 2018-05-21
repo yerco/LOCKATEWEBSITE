@@ -8,10 +8,7 @@ by sensors (through their gateways)
 sudo apt-get install libzmq-dev
 sudo apt-get install php-zmq
 sudo apt-get install php-mysql
-
 ```
-
-
 
 ## Important Production and Development changes
 
