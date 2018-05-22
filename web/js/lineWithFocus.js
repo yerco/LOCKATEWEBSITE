@@ -135,8 +135,9 @@ function getRandomArbitrary(min, max) {
 
 function addGraphWrapper(data, startBrush, endBrush) {
     nv.addGraph(function () {
-        var chart = nv.models.lineWithFocusChart();
-
+        var chart = nv.models.lineWithFocusChart()
+            .margin({right:50, left: 75});
+        chart.interpolate("linear");
         /* Initial sliding frame */
         //chart.brushExtent([1, 3]);
         //chart.brushExtent([1523946958, 1522926985]);
@@ -145,12 +146,14 @@ function addGraphWrapper(data, startBrush, endBrush) {
 
 
         // chart.xAxis.tickFormat(d3.format(',f')).axisLabel("Stream - 3,128,.1");
-        chart.xAxis.tickFormat(
+        chart.xAxis
+            .axisLabel('Date and Time')
+            .tickFormat(
             function (d) {
                 return d3.time.format('%d-%b %H:%M')(new Date(d));
             }
-        )
-            .axisLabel("Stream dd");
+        );
+
 
 
         // chart.x2Axis.tickFormat(d3.format(',f'));
@@ -158,9 +161,8 @@ function addGraphWrapper(data, startBrush, endBrush) {
             function (d) {
                 return d3.time.format('%d-%b %H:%M')(new Date(d));
             }
-        )
-            .axisLabel("Stream dd");
-
+        );
+        chart.yAxis.axisLabel('var_name'+' [units]');
         chart.yTickFormat(d3.format(',.2f'));
 
         chart.useInteractiveGuideline(true);
@@ -175,7 +177,8 @@ function addGraphWrapper(data, startBrush, endBrush) {
             .call(chart);
 
         nv.utils.windowResize(chart.update);
-
+        // Improves tooltip re-rendering behavior.
+        d3.selectAll('.nvtooltip').style('opacity', '0'); 
         return chart;
     });
 }

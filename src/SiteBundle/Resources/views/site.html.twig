@@ -93,14 +93,14 @@
                                 <a onclick="renderChart('Voltage_4', 'chart1_data3.json', '2016-10-24', '2016-10-26', '#chart1')" style="cursor:pointer;">Phones Detected Today</a> |
                             </div>
                             {# aca va el mono #}
-                            {#<div id="show_wrapper" class="col-xs-12 col-lg-12">#}
+                            <div id="show_wrapper" class="col-xs-12 col-lg-12">
                                 {#<div id="chart" class='with-3d-shadow with-transitions'>#}
                                     {#<svg></svg>#}
                                 {#</div>#}
                                 <div id="chart" class='chart'>
                                     <svg></svg>
                                 </div>
-                            {#</div><!--/.col-xs-12.col-lg-12-->#}
+                            </div><!--/.col-xs-12.col-lg-12-->
                         </div> <!--row-->
 
 
@@ -129,6 +129,7 @@
     </div>
 
     <link href="{{- asset('css/nv.d3.css') -}}" rel="stylesheet" />
+    <link href="{{- asset('css/lineWithFocus.css') }}" rel="stylesheet" />
     <script src="{{- asset('js/autobahn.js') -}}"></script>
     {#<script src="{{ asset('js/d3.v4.min.js') }}"></script>#}
     <script src="{{- asset('js/smoothie.js') -}}"></script>
@@ -137,5 +138,6 @@
     <script src="{{ asset('js/d3.min.js') }}"></script>
     <script src="{{ asset('js/nv.d3.js') }}"></script>
     <script src="{{ asset('js/lineWithFocus.js') }}"></script>
+
 {%- endblock -%}
 

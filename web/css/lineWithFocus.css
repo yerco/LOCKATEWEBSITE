@@ -10,3 +10,15 @@ svg {
     height: 100%;
     width: 100%;
 }
+
+#show_wrapper {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    height: 300px;
+    box-shadow: 0 0 5px #aaa;
+    padding: 5px 3px 20px 3px;
+}
