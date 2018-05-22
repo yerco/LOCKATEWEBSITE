@@ -24,9 +24,12 @@ class SiteController extends Controller
     public function indexAction(Request $request) {
         /** @var $session Session */
         $session = $request->getSession();
-
         $authErrorKey = Security::AUTHENTICATION_ERROR;
         $lastUsernameKey = Security::LAST_USERNAME;
+
+        if ($request->getLocale() != "en") {
+            $request->setLocale($request->getLocale());
+        }
 
         // get the error if any (works with forward and redirect -- see below)
         if ($request->attributes->has($authErrorKey)) {
@@ -121,25 +124,30 @@ class SiteController extends Controller
             );
             $logger = $this->container->get('logger');
             $context = new ZMQContext();
-            $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, "my pusher");
-            //$socket->connect("tcp://localhost:5555");
-            if ($this->getParameter('environment') == 'dev') {
-                /* DEVELOPMENT */
-                $socket->connect("tcp://127.0.0.1:5555");
-            }
-            if ($this->getParameter('environment') == 'prod') {
-                /* PRODUCTION */
-                $socket->connect("tcp://188.166.11.160:5555");
-            }
-            $logger->info("Records sent .");
-            // pay attention to this name `gateway_id`
-            // (it's same at ReceiverPusher `onNewData`
+            try {
+                $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, "my pusher");
+                //$socket->connect("tcp://localhost:5555");
+                if ($this->getParameter('environment') == 'dev') {
+                    /* DEVELOPMENT */
+                    $socket->connect("tcp://127.0.0.1:5555");
+                }
+                if ($this->getParameter('environment') == 'prod') {
+                    /* PRODUCTION */
+                    $socket->connect("tcp://188.166.11.160:5555");
+                }
+                $logger->info("Records sent .");
+                // pay attention to this name `gateway_id`
+                // (it's same at ReceiverPusher `onNewData`
 
-            //var_dump($request_json_content);
-            $socket->send(json_encode(
-                    $entry_data
-                )
-            );
+                //var_dump($request_json_content);
+                $socket->send(json_encode(
+                        $entry_data
+                    )
+                );
+            }
+            catch(\ZMQSocketException $e) {
+                echo $e->getMessage();
+            }
         }
 
         return new JsonResponse(array(
@@ -149,36 +157,4 @@ class SiteController extends Controller
         );
     }
 
-    public function dataReceiverAction(Request $request) {
-        $factory = $this->get('security.encoder_factory');
-        $user_manager = $this->get('fos_user.user_manager');
-        $_username = $request->getUser();
-        $_password = $request->getPassword();
-        $user = $user_manager->findUserByUsername($_username);
-        // Check if the user exists !
-        if(!$user){
-            return new Response(
-                'Username doesnt exists',
-                Response::HTTP_UNAUTHORIZED,
-                array('Content-type' => 'application/json')
-            );
-        }
-        /// Start verification
-        $encoder = $factory->getEncoder($user);
-        $salt = $user->getSalt();
-
-        if(!$encoder->isPasswordValid($user->getPassword(), $_password, $salt)) {
-            return new Response(
-                'Username or Password not valid.',
-                Response::HTTP_UNAUTHORIZED,
-                array('Content-type' => 'application/json')
-            );
-        }
-        /// End Verification
-
-        return new JsonResponse(array(
-                "message" => "data received " . time()
-            )
-        );
-    }
 }

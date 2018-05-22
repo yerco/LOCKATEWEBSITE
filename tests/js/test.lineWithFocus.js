@@ -1,4 +1,5 @@
 var expect = chai.expect;
+var allData;
 
 describe('Line with focus', function() {
     'use strict';
@@ -6,74 +7,81 @@ describe('Line with focus', function() {
         xit('should retrieve data from the API (resolves)', function() {
             var limit = 10;
             return requestHandler(limit).then(function(data) {
-                console.log(data.responseXML);
+                //console.log(data.target.response);
                 expect(data).not.to.be.empty;
             });
         });
 
-        it('should have a function to transform Dates to timestamps', function() {
-            var dateSampleString = "Wed Apr 18 2018 15:10:31 GMT+0200 (CEST)";
-            var dateSampleTimestamp = 1524057031000; // without millis '1524064231
+        xit('should have a function to transform Dates to timestamps', function() {
+            var dateSampleString = "Wed Apr 18 2018 15:10:31";
+            var dateSampleTimestamp = 1524064231; // without millis '1524064231
             var timestamp = datestringToTimestamp(dateSampleString);
             expect(timestamp).to.be.equal(dateSampleTimestamp);
         });
 
-        xit('should adapt the data to a proper format',function() {
+        xit('should adapt the data to a proper format (AdaptData)',function() {
 
             // conversions to timestamp using https://www.epochconverter.com/
+            // endpoint ` /api/v1/lastgatewaynodesevents/{gateway_id}/{node_id}/{limit}`
             var responsePacketSample =
                 [
                     {
-                        "gateway_id": 1,
+                        "gateway_id_real": 1,
                         "gateway_summary": {
                             "device": "RPI",
                             "name": "naifo_gateway",
                             "location": "penalolen"
                         },
                         "gateway_timestamp": {
-                            "date": "2018-04-17 08:35:58.000000",
+                            "date": "2018-05-14 16:54:13.000000", // 1526316853; millis 1526316853000
                             "timezone_type": 3,
                             "timezone": "UTC"
                         },
+                        "node_id_real": 1,
                         "node_summary": {
-                            "phones_around": 20,
-                            "name": "naifo_node",
-                            "phones_detected": 25
+                            "phones_around_now": 15,
+                            "phones_around_hour_mean": 96,
+                            "phones_detected_hour": 26,
+                            "phones_detected_today": 37,
+                            "name": "naifo_node"
                         },
                         "node_timestamp": {
-                            "date": "2018-04-17 08:35:58.000000",
+                            "date": "2018-05-14 16:54:13.000000", // 1526316853; millis 1526316853000
                             "timezone_type": 3,
                             "timezone": "UTC"
                         }
                     },
                     {
-                        "gateway_id": 1,
+                        "gateway_id_real": 1,
                         "gateway_summary": {
                             "device": "RPI",
                             "name": "naifo_gateway",
                             "location": "penalolen"
                         },
                         "gateway_timestamp": {
-                            "date": "2018-04-17 08:35:54.000000",
+                            "date": "2018-05-14 16:54:07.000000", // 1526316847; millis 1526316847000
                             "timezone_type": 3,
                             "timezone": "UTC"
                         },
+                        "node_id_real": 1,
                         "node_summary": {
-                            "phones_around": 33,
-                            "name": "naifo_node",
-                            "phones_detected": 39
+                            "phones_around_now": 49,
+                            "phones_around_hour_mean": 16,
+                            "phones_detected_hour": 0,
+                            "phones_detected_today": 71,
+                            "name": "naifo_node"
                         },
                         "node_timestamp": {
-                            "date": "2018-04-17 08:35:54.000000",
+                            "date": "2018-05-14 16:54:07.000000", // 1526316847; millis 1526316847000
                             "timezone_type": 3,
                             "timezone": "UTC"
                         }
                     }
-                ];
-
+                ]
+            ;
             var graphPacketSample = [
                 {
-                    key: "Gateway1",
+                    key: "Gateway 1",
                     area: false,
                     values: [
                         {x:1523946958, y:20},
@@ -87,25 +95,52 @@ describe('Line with focus', function() {
                 }
             ];
 
-            var megaPacket = adaptData(responsePacketSample);
-            expect(megaPacket).to.deep.equal(graphPacketSample);
+            var graphPacketsSamples = {
+                "phones_around_now": {
+                    key: "Gateway 1 - Node 1",
+                    area: false,
+                    values: [
+                        {x:1526316853, y:15},
+                        {x:1526316847, y:49}
+                    ]
+                },
+                "phones_around_hour_mean": {
+                    key: "Gateway 1 - Node 1",
+                    area: false,
+                    values: [
+                        {x:1526316853, y:96},
+                        {x:1526316847, y:16}
+                    ]
+                },
+                "phones_detected_hour": {
+                    key: "Gateway 1 - Node 1",
+                    area: false,
+                    values: [
+                        {x:1526316853, y:26},
+                        {x:1526316847, y:0}
+                    ]
+                },
+                "phones_detected_today": {
+                    key: "Gateway 1 - Node 1",
+                    area: false,
+                    values: [
+                        {x:1526316853, y:37},
+                        {x:1526316847, y:71}
+                    ]
+                }
+            };
+
+            var adaptedPacket = adaptData(responsePacketSample);
+            expect(adaptedPacket).to.deep.equal(graphPacketsSamples);
         });
 
-        xit('should make a graph with example sort of data', function() {
+        /* This is a graphic test - need to check the browser */
+        xit('should make graphs with requested sample of data (including links)', function() {
+            "use strict";
             var limit = 100;
-            var downwardLimit = Math.ceil(limit * 0.7);
-            var upperLimit = Math.floor(limit * 0.8);
             requestHandler(limit).then(function(e) {
-                //console.log(e);
-                //console.log(e.target.response);
-                //console.log(JSON.parse(e.target.response));
-                console.log(adaptData(JSON.parse(e.target.response)));
-                var data = adaptData(JSON.parse(e.target.response));
-                data[0].values = data[0].values.reverse();
-                //console.log
-                var startBrush = data[0].values[downwardLimit].x;
-                var endBrush = data[0].values[upperLimit].x;
-                addGraphWrapper(data, startBrush, endBrush);
+                allData = adaptData(JSON.parse(e.target.response));
+                renderChart('phones_around_hour_mean');
                 //expect(e).not.to.be.empty;
             }, function() {
                 console.log("Error");
@@ -150,10 +185,7 @@ describe('Line with focus', function() {
                     ]
                 }
             ];
-            var startDummy = dummyDataTime[0].values[1].x;
-            var endDummy = dummyDataTime[0].values[4].x;
             addGraphWrapper(sample, startBrush, endBrush);
-            //addGraphWrapper(dummyDataTime, startDummy, endDummy);
         });
     });
 });
