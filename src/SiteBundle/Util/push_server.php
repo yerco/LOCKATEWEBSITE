@@ -30,9 +30,9 @@ class PushServer
         $pull = $context->getSocket(ZMQ::SOCKET_PULL);
         // Binding to 127.0.0.1 means the only client that can connect is itself
         /* DEVELOPMENT */
-        //$pull->bind('tcp://127.0.0.1:5555');
+        $pull->bind('tcp://127.0.0.1:5555');
         /* PRODUCTION */
-        $pull->bind('tcp://188.166.11.160:5555');
+        //$pull->bind('tcp://188.166.11.160:5555');
         $pull->on('message', array($pusher, 'onNewData'));
 
         // Set up our WebSocket server for clients wanting real-time updates

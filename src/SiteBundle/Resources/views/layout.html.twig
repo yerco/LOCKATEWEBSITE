@@ -39,7 +39,7 @@
                             <li><a href="">{% trans %}Profile{% endtrans %}</a></li>
                             <li>
                                 {%- if is_granted('ROLE_USER') -%}
-                                    <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+                                    <a href="{{ path('site_bundle_security_logout') }}">Logout</a>
                                 {%- else -%}
                                     Not logged and here talk to developer please
                                 {%- endif -%}

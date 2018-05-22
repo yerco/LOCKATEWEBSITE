@@ -34,7 +34,7 @@
 <body background="{{- asset('images/tech2b.jpg') -}}">
 {%- block body -%}
     {%- if is_granted('ROLE_USER') -%}
-        <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+        <a href="{{ path('site_bundle_security_logout') }}">Logout</a>
     {%- else -%}
         <div class="container">
             <div class="row">

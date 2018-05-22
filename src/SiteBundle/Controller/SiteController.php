@@ -80,7 +80,7 @@ class SiteController extends Controller
             return $this->render('@Site/site.html.twig');
         }
         if ($this->getUser() === null && $_username === null) {
-            return $this->redirect('/'. $locale);
+            return $this->redirect('/');
         }
 
         // if not login then receiving data on this endpoint
@@ -124,25 +124,30 @@ class SiteController extends Controller
             );
             $logger = $this->container->get('logger');
             $context = new ZMQContext();
-            $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, "my pusher");
-            //$socket->connect("tcp://localhost:5555");
-            if ($this->getParameter('environment') == 'dev') {
-                /* DEVELOPMENT */
-                $socket->connect("tcp://127.0.0.1:5555");
-            }
-            if ($this->getParameter('environment') == 'prod') {
-                /* PRODUCTION */
-                $socket->connect("tcp://188.166.11.160:5555");
-            }
-            $logger->info("Records sent .");
-            // pay attention to this name `gateway_id`
-            // (it's same at ReceiverPusher `onNewData`
+            try {
+                $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, "my pusher");
+                //$socket->connect("tcp://localhost:5555");
+                if ($this->getParameter('environment') == 'dev') {
+                    /* DEVELOPMENT */
+                    $socket->connect("tcp://127.0.0.1:5555");
+                }
+                if ($this->getParameter('environment') == 'prod') {
+                    /* PRODUCTION */
+                    $socket->connect("tcp://188.166.11.160:5555");
+                }
+                $logger->info("Records sent .");
+                // pay attention to this name `gateway_id`
+                // (it's same at ReceiverPusher `onNewData`
 
-            //var_dump($request_json_content);
-            $socket->send(json_encode(
-                    $entry_data
-                )
-            );
+                //var_dump($request_json_content);
+                $socket->send(json_encode(
+                        $entry_data
+                    )
+                );
+            }
+            catch(\ZMQSocketException $e) {
+                echo $e->getMessage();
+            }
         }
 
         return new JsonResponse(array(
