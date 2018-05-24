@@ -51,14 +51,14 @@ function requestHandler(limit) { //(callback) {
 //     });
 
 /**
- * Assuming GMT dateString
+ * Assuming Amsterdam timezone dateString
  *
  * @param dateString - string ex: "Wed Apr 18 2018 15:10:31"
  * @returns {number} - int ex (above example 1524064231)
  */
 function datestringToTimestamp(dateString) {
     'use strict';
-    var date = new Date(dateString + " " + "UTC");
+    var date = new Date(dateString + " " + "UTC+2");
     var timestampMillis = date.getTime();// - (date.getTimezoneOffset() * 1000 * 60);
     var timeStamp = timestampMillis;// / 1000;
     return timeStamp

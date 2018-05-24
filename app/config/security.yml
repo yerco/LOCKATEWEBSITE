@@ -43,7 +43,7 @@ security:
             logout:
                 path: site_bundle_security_logout
                 target: lockate_site_homepage_lang
-
+                invalidate_session: true
 
     encoders:
         SiteBundleEntity\User: bcrypt
@@ -59,4 +59,4 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         # maybe too broad
-        - { path: ^/(en|es)/site, role: ROLE_USER }
+        #- { path: ^/(en|es)/site, role: ROLE_USER }

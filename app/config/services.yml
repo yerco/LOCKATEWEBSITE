@@ -51,6 +51,6 @@ services:
     # locale sticky session
     sitebundle.locale_subscriber:
         class: SiteBundle\EventSubscriber\LocaleSubscriber
-        arguments: ['%app.locales%']
+        arguments: ['%kernel.default_locale%']
         # redundant if you're using autoconfigure
         tags: [kernel.event_subscriber]
