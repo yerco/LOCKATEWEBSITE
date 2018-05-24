@@ -58,8 +58,8 @@ function requestHandler(limit) { //(callback) {
  */
 function datestringToTimestamp(dateString) {
     'use strict';
-    var date = new Date(dateString);
-    var timestampMillis = date.getTime() - (date.getTimezoneOffset() * 1000 * 60);
+    var date = new Date(dateString + " " + "UTC");
+    var timestampMillis = date.getTime();// - (date.getTimezoneOffset() * 1000 * 60);
     var timeStamp = timestampMillis;// / 1000;
     return timeStamp
 }
@@ -171,8 +171,10 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function addGraphWrapper(data, startBrush, endBrush) {
+function addGraphWrapper(data, startBrush, endBrush, chartDivId) {
     "use strict";
+    console.log("addGraphWrapper's data");
+    console.log(data);
     nv.addGraph(function () {
         var chart = nv.models.lineWithFocusChart()
             .margin({right:50, left: 75});
@@ -183,7 +185,6 @@ function addGraphWrapper(data, startBrush, endBrush) {
         //chart.brushExtent([1374561814000, 1374565814000]);
         chart.brushExtent([startBrush, endBrush]);
 
-
         // chart.xAxis.tickFormat(d3.format(',f')).axisLabel("Stream - 3,128,.1");
         chart.xAxis
             .axisLabel('Date and Time')
@@ -192,8 +193,6 @@ function addGraphWrapper(data, startBrush, endBrush) {
                 return d3.time.format('%d-%b %H:%M')(new Date(d));
             }
         );
-
-
 
         // chart.x2Axis.tickFormat(d3.format(',f'));
         chart.x2Axis.tickFormat(
@@ -207,7 +206,7 @@ function addGraphWrapper(data, startBrush, endBrush) {
         chart.useInteractiveGuideline(true);
         // console.log("MEGA");
         // console.log(megaPacket);
-        d3.select("#chart svg")
+        d3.select("#" + chartDivId + " " + "svg")
         //d3.select('#'+ chartDivId + ' ' + 'svg')
         //.datum(testData())
         //.datum(dummyData)
@@ -223,7 +222,7 @@ function addGraphWrapper(data, startBrush, endBrush) {
     });
 }
 
-function renderChart(currentChart) {
+function renderChart(currentChart, chartDivId) {
     "use strict";
     window.currentChart = currentChart;
     // coloring active graph's link
@@ -247,10 +246,10 @@ function renderChart(currentChart) {
         specificGraphData[0].values = specificGraphData[0].values.reverse();
     }
     //console.log("allData");
-    console.log(window.allData[currentChart]);
+    //console.log(window.allData[currentChart]);
     var startBrush = window.allData[currentChart].values[downwardLimit].x;
     var endBrush = window.allData[currentChart].values[upperLimit].x;
-    addGraphWrapper(specificGraphData, startBrush, endBrush);
+    addGraphWrapper(specificGraphData, startBrush, endBrush, chartDivId);
 }
 
 // addGraphWrapper();
@@ -261,7 +260,7 @@ var limit = 100;
 requestHandler(limit).then(function(e) {
         'use strict';
         window.allData = adaptData(JSON.parse(e.target.response));
-        renderChart("phones_around_now");
+        renderChart("phones_around_now", "chart");
     }, function() {
         console.log("Error");
     }

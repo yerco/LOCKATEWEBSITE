@@ -1,12 +1,12 @@
-lockate_site_homepage:
-    path:     /
-    defaults: { _controller: SiteBundle:Site:index }
-
 lockate_site_homepage_lang:
     path:     /{_locale}
     defaults: { _controller: SiteBundle:Site:index }
     requirements:
         _locale: '%app.locales%'
+
+lockate_site_homepage:
+    path:     /
+    defaults: { _controller: SiteBundle:Site:index }
 
 lockate_site_logged:
     path: /site

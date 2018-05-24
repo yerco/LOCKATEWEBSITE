@@ -19,9 +19,17 @@ class LocaleSubscriber implements EventSubscriberInterface
 
         $request = $event->getRequest();
 
-        if (!$request->hasPreviousSession()) {
-            return;
-        }
+        /**
+         * To solve the initial language/locale setting I'm commenting
+         * out these 3 lines below, BUT later on we will need  to find out
+         * if it has an impact.
+         * Maybe there's a performance hurt because all users will receive a
+         * session cookie.
+         * https://symfony.com/doc/3.4/session/avoid_session_start.html
+         */
+        //if (!$request->hasPreviousSession()) {
+        //    return;
+        //}
 
         // try to see if the locale has been set as a _locale routing parameter
         if ($locale = $request->attributes->get('_locale')) {

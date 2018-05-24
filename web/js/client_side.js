@@ -1,14 +1,42 @@
-var timeData;
-var phonesAroundNow;
-var phonesAroundHourMean;
-var phonesDetectedHour;
-var phonesDetectedToday;
-var gatewayTime;
-var nodeTime;
 var chartDivId = "chart";
-var phones_around_hour_mean = [];
 
 window.currentChart = "phones_around_now";
+
+/**
+ *
+ * @param topic - left for possible future use
+ * @param data
+ */
+function panelsInfo(topic, data) {
+    "use strict";
+    /* Section get through the websocket */
+    // add to DOM
+    var packet = data.packet[0];
+    //console.log(packet['gateway_id']);
+    //console.log(packet);
+    //console.log(packet['node_record'][0]['timestamp']);
+    //console.log(packet['node_record'][0]['node_summary']['phones_around']);
+    var timeData = packet['node_record'][0]['timestamp'];
+    var phonesAroundNow = packet['node_record'][0]['node_summary']['phones_around_now'];
+    var phonesAroundHourMean = packet['node_record'][0]['node_summary']['phones_around_hour_mean'];
+    var phonesDetectedHour = packet['node_record'][0]['node_summary']['phones_detected_hour'];
+    var phonesDetectedToday = packet['node_record'][0]['node_summary']['phones_detected_today'];
+    // localtime(s) plus GMT offset indication
+    var gatewayTime = new Date(packet['timestamp'] * 1000);
+    var nodeTime = new Date(packet['node_record'][0]['timestamp'] * 1000);
+    document.getElementById("phones-around-now").innerHTML = phonesAroundNow;
+    document.getElementById("phones-around-hour-mean").innerHTML = phonesAroundHourMean;
+    document.getElementById("phones-detected-hour").innerHTML = phonesDetectedHour;
+    document.getElementById("phones-detected-today").innerHTML = phonesDetectedToday;
+    var gatewayTimes = document.getElementsByClassName("gateway-time");
+    for (var i = 0; i < gatewayTimes.length; i++) {
+        gatewayTimes[i].innerHTML = gatewayTime;
+    }
+    var nodeTimes = document.getElementsByClassName("node-time");
+    for (i = 0; i < nodeTimes.length; i++) {
+        nodeTimes[i].innerHTML = nodeTime;
+    }
+}
 
 /* DEVELOPMENT */
 var conn = new ab.Session('ws://localhost:8018',
@@ -17,32 +45,11 @@ var conn = new ab.Session('ws://localhost:8018',
     function() {
         "use strict";
         conn.subscribe('gateway_record', function(topic, data) {
-            // add to DOM
-            var packet = data.packet[0];
-            //console.log(packet['gateway_id']);
-            console.log(packet);
-            //console.log(packet['node_record'][0]['timestamp']);
-            //console.log(packet['node_record'][0]['node_summary']['phones_around']);
-            timeData = packet['node_record'][0]['timestamp'];
-            phonesAroundNow = packet['node_record'][0]['node_summary']['phones_around_now'];
-            phonesAroundHourMean = packet['node_record'][0]['node_summary']['phones_around_hour_mean'];
-            phonesDetectedHour = packet['node_record'][0]['node_summary']['phones_detected_hour'];
-            phonesDetectedToday = packet['node_record'][0]['node_summary']['phones_detected_today'];
-            gatewayTime = new Date(packet['timestamp'] * 1000);
-            nodeTime = new Date(packet['node_record'][0]['timestamp'] * 1000);
-            document.getElementById("phones-around-now").innerHTML = phonesAroundNow;
-            document.getElementById("phones-around-hour-mean").innerHTML = phonesAroundHourMean;
-            document.getElementById("phones-detected-hour").innerHTML = phonesDetectedHour;
-            document.getElementById("phones-detected-today").innerHTML = phonesDetectedToday;
-            var gatewayTimes = document.getElementsByClassName("gateway-time");
-            for (var i = 0; i < gatewayTimes.length; i++) {
-                gatewayTimes[i].innerHTML = gatewayTime;
-            }
-            var nodeTimes = document.getElementsByClassName("node-time");
-            for (i = 0; i < nodeTimes.length; i++) {
-                nodeTimes[i].innerHTML = nodeTime;
-            }
 
+            // Info gotten through websocket
+            panelsInfo(topic, data);
+
+            /* Section get through AJAX request */
             /* graph  nvd3 */
             var limit = 100;
             var downwardLimit = Math.ceil(limit * 0.7);
@@ -58,7 +65,7 @@ var conn = new ab.Session('ws://localhost:8018',
                 var startBrush = window.allData[currentChart].values[downwardLimit].x;
                 var endBrush = window.allData[currentChart].values[upperLimit].x;
                 //console.log(allData);
-                renderChart(window.currentChart);
+                renderChart(window.currentChart, "chart");
                 //addGraphWrapper(specificGraphData, startBrush, endBrush);
             }, function() {
                 console.log("Error");

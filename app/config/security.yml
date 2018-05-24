@@ -58,5 +58,5 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        # too broad
-        #- { path: ^/site, role: ROLE_USER }
+        # maybe too broad
+        - { path: ^/(en|es)/site, role: ROLE_USER }
