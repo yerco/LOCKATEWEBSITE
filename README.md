@@ -38,4 +38,3 @@ Run:
 `$ php src/SiteBundle/Util/push_server.php`
 
 If it does not start there could be X pending requests in the browser: try again X times.
-
