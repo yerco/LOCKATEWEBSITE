@@ -60,5 +60,17 @@
                 <p>&copy; 2013 - 2018 Lock8/Lockate - Sensor Networks & Data Analytics</p>
             </footer>
         {%- endblock -%}
+
+        <!--scripts loaded here-->
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script>
+            {# Note: multiple $(document).ready(...) run on first Called first run basis #}
+            $(document).ready(function () {
+                $('[data-toggle="offcanvas"]').click(function () {
+                    $('.row-offcanvas').toggleClass('active')
+                });
+            });
+        </script>
     </body>
 </html>

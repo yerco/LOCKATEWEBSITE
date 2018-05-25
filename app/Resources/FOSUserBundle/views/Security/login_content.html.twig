@@ -6,14 +6,16 @@
 
 <div class="login-panel panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Lock-8</h3>
+        <h3 class="panel-title"  style="display: inline-block; padding:0 0 0 33%;">Lock8</h3>
         {# ############# FLAGS ############# #}
-        <a href="{{ url('lockate_site_homepage') }}es">
-            <img border="0" alt="Spanish" src="{{- asset('images/es.png') -}}" >
-        </a>
-        <a href="{{ url('lockate_site_homepage') }}en">
-            <img border="0" alt="Spanish" src="{{- asset('images/gb.png') -}}" >
-        </a>
+        <span style="position: absolute; right: 30px; margin-top:10px;">
+            <a href="{{ url('lockate_site_homepage') }}es">
+                <img border="0" alt="Spanish" src="{{- asset('images/es.png') -}}" >
+            </a>
+            <a href="{{ url('lockate_site_homepage') }}en">
+                <img border="0" alt="Spanish" src="{{- asset('images/gb.png') -}}" >
+            </a>
+        </span>
     </div>
     <div class="panel-body" id="login-main-frame">
 
@@ -21,24 +23,23 @@
             <fieldset>
                 <div class="form-group">
                     {%- if csrf_token -%}
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                        <input type="hidden" class="form-control" name="_csrf_token" value="{{ csrf_token }}"/>
                     {%- endif -%}
                 </div>
                 <div class="form-group">
-                    <label for="username">{{ 'security.login.username'|trans }}</label>
-                    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required"
-                           autocomplete="username"/>
+                    <input type="text" class="form-control" placeholder="{{ 'security.login.username'|trans }}" id="username" name="_username" value="{{ last_username }}" required="required"
+                           autocomplete="username"  autofocus="autofocus"/>
                 </div>
                 <div class="form-group">
-                    <label for="password">{{ 'security.login.password'|trans }}</label>
-                    <input type="password" id="password" name="_password" required="required" autocomplete="current-password"/>
+                    <input type="password" class="form-control" placeholder="{{ 'security.login.password'|trans }}" id="password" name="_password" required="required" autocomplete="current-password"/>
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
-                    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>  {{ 'security.login.remember_me'|trans }}</input>
+
                 </div>
                 <div class="form-group">
-                    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}"/>
+                    <input type="submit" class="btn btn-lg btn-success btn-block" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}"/>
                 </div>
             </fieldset>
         </form>

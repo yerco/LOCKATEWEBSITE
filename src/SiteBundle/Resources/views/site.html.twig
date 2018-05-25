@@ -5,120 +5,133 @@
 
     <div class="container-fluid">
         <div class="row row-offcanvas row-offcanvas-right">
-
-            {# quid #}
             <div class="col-xs-12 col-sm-10 col-sm-push-2">
+                <button type="button" style= "background-color: #005761; border-color: #005761; width: 100%; color: white;" class="pull-left btn btn-default visible-xs" data-toggle="offcanvas" aria-expanded="false" aria-controls="navbar">
+                    <i class="">Sub-Menú</i>
+                </button>
+
+                {# CHECK IF JUMBOTRON NEEDED                            #}
+                {#<div class="jumbotron">                               #}
+                    {#<h2>Bienvenido a OKORI??? Labs!</h2>              #}
+                    {#<p>Analítica de Datos y Visión Computacional</p>  #}
+                {#</div>                                                #}
+
                 <div class="row-custom">
-                    {# Node Data Group #}
-                    <span class="anchor" id="group1"></span>
-                    <div class="row row-striped" style="">
-                        <div class="col-xs-12 col-lg-12">
-                            <h2 style="display: inline-block; padding:10px 0 0 0"><b>{% trans %}Overview{% endtrans %}: {% trans %}Node{% endtrans %}
-                                    1</b></h2>
-                            <span><input type="submit" id="calculate0" class="btn-xs btn-success "  name="boton" value="Back to Top" style="background-color: #003035; border-color: #001214; position: absolute; right: 30px; margin-top:10px;"/></span>
-                            <p>{% trans %}Phone monitoring consolidated summary{% endtrans %} - {% trans %}project total nodes{% endtrans %}.</p>
-                            <hr><br>
-                        </div>{# /.col-xs-12.col-lg-12 #}
-                        {# ------------ PANELS ----------- #}
-                        <div class="col-xs-12 col-lg-12">
-                            {# Panel 1.1 #}
-                            <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                                <div class="panel panel-info centering">
-                                    <div class="panel-heading"><b>{% trans %}Phones Around Now{% endtrans %}</b></div>
-                                    <div class="panel-body">
-                                        <p id="phones-around-now" style="font-size:40px; font-weight: 200;">
-                                            0
-                                        </p>
-                                        <p>
-                                            <a class="btn btn-default" href="#" role="button">{% trans %}KPI Details{% endtrans %} &raquo;</a>
-                                        </p>
-                                        <p class="node-time" style="font-size:0.7rem; font-weight: 200;"></p>
-                                    </div>
-                                </div>
-                            </div>{# /.Panel 1.1 #}
-                            {# Panel 1.2 #}
-                            <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                                <div class="panel panel-info centering">
-                                    <div class="panel-heading"><b>{% trans %}Phones Around Last Hour Average{% endtrans %}</b></div>
-                                    <div class="panel-body">
-                                        <p id="phones-around-hour-mean" style="font-size:40px; font-weight: 200;">
-                                            0
-                                        </p>
-                                        <p>
-                                            <a class="btn btn-default" href="#" role="button">{% trans %}KPI Details{% endtrans %} &raquo;</a>
-                                        </p>
-                                        <p class="node-time" style="font-size:0.7rem; font-weight: 200;"></p>
-                                    </div>
-                                </div>
-                            </div>{# /.Panel 1.2 #}
-                            {# Panel 1.3 #}
-                            <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                                <div class="panel panel-info centering">
-                                    <div class="panel-heading"><b>{% trans %}Phones Detected Cumulative Last Hour{% endtrans %}</b></div>
-                                    <div class="panel-body">
-                                        <p id="phones-detected-hour" style="font-size:40px; font-weight: 200;">
-                                            0
-                                        </p>
-                                        <p>
-                                            <a class="btn btn-default" href="#" role="button">{% trans %}KPI Details{% endtrans %} &raquo;</a>
-                                        </p>
-                                        <p class="gateway-time" style="font-size:0.7rem; font-weight: 200;"></p>
-                                    </div>
-                                </div>
-                            </div>{# /.Panel 1.3 #}
-                            {# Panel 1.4 #}
-                            <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                                <div class="panel panel-info centering">
-                                    <div class="panel-heading"><b>{% trans %}Phones Detected Cumulative Today{% endtrans %}</b></div>
-                                    <div class="panel-body">
-                                        <p id="phones-detected-today" style="font-size:40px; font-weight: 200;">
-                                            0
-                                        </p>
-                                        <p>
-                                            <a class="btn btn-default" href="#" role="button">{% trans %}KPI Details{% endtrans %} &raquo;</a>
-                                        </p>
-                                        <p class="gateway-time" style="font-size:0.7rem; font-weight: 200;"></p>
-                                    </div>
-                                </div>
-                            </div>{# /.Panel 1.4 #}
-                        </div> <!--row-->
-                        {# ------------ END of PANELS ----------- #}
+                    {% block inside %}{% endblock %}
 
-                        <div class="col-xs-12 col-lg-12">
-                            <h4><b>{% trans %}Historical Variable Charts{% endtrans %}</b></h4>
-                            <p>{% trans %}Select the variable to visualize{% endtrans %}:</p>
-                            <div class="examplelinks chartlinks"> |
-                                <a onclick="renderChart('phones_around_now')" id="phones_around_now" style="cursor:pointer;">
-                                    {% trans %}Phones Around Instantaneous{% endtrans %}
-                                </a> |
-                                <a onclick="renderChart('phones_around_hour_mean')" id="phones_around_hour_mean"
-                                   style="cursor:pointer;">
-                                    {% trans %}Phones Around Last Hour Average{% endtrans %}
-                                </a> |
-                                <a onclick="renderChart('phones_detected_hour')" id="phones_detected_hour" style="cursor:pointer;">
-                                    {% trans %}Phones Detected Hour{% endtrans %}
-                                </a> |
-                                <a onclick="renderChart('phones_detected_today')" id="phones_detected_today" style="cursor:pointer;">
-                                    {% trans %}Phones Detected Today{% endtrans %}
-                                </a> |
+                    {# quid #}
+                        <div class="row-custom">
+                            {# ------------- Node Data Group ------------- #}
+                            <span class="anchor" id="group1"></span>
+                            <div class="row row-striped" style="">
+                                <div class="col-xs-12 col-lg-12">
+                                    <h2 style="display: inline-block; padding:10px 0 0 0"><b>{% trans %}Overview{% endtrans %}: {% trans %}Node{% endtrans %}
+                                            1</b></h2>
+                                    <span><input type="submit" id="calculate0" class="btn-xs btn-success "  name="boton" value="Back to Top" style="background-color: #003035; border-color: #001214; position: absolute; right: 30px; margin-top:10px;"/></span>
+                                    <p>{% trans %}Phone monitoring consolidated summary{% endtrans %} - {% trans %}project total nodes{% endtrans %}.</p>
+                                    <hr><br>
+                                </div>{# /.col-xs-12.col-lg-12 #}
+
+                                {# ------------ PANELS ----------- #}
+                                <div class="col-xs-12 col-lg-12">
+                                    {# Panel 1.1 #}
+                                    <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                                        <div class="panel panel-info centering">
+                                            <div class="panel-heading"><b>{% trans %}Phones Around Now{% endtrans %}</b></div>
+                                            <div class="panel-body">
+                                                <p id="phones-around-now" style="font-size:40px; font-weight: 200;">
+                                                    0
+                                                </p>
+                                                <p>
+                                                    <a class="btn btn-default" href="#" role="button">{% trans %}KPI Details{% endtrans %} &raquo;</a>
+                                                </p>
+                                                <p class="node-time" style="font-size:0.7rem; font-weight: 200;"></p>
+                                            </div>
+                                        </div>
+                                    </div>{# /.Panel 1.1 #}
+                                    {# Panel 1.2 #}
+                                    <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                                        <div class="panel panel-info centering">
+                                            <div class="panel-heading"><b>{% trans %}Phones Around Last Hour Average{% endtrans %}</b></div>
+                                            <div class="panel-body">
+                                                <p id="phones-around-hour-mean" style="font-size:40px; font-weight: 200;">
+                                                    0
+                                                </p>
+                                                <p>
+                                                    <a class="btn btn-default" href="#" role="button">{% trans %}KPI Details{% endtrans %} &raquo;</a>
+                                                </p>
+                                                <p class="node-time" style="font-size:0.7rem; font-weight: 200;"></p>
+                                            </div>
+                                        </div>
+                                    </div>{# /.Panel 1.2 #}
+                                    {# Panel 1.3 #}
+                                    <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                                        <div class="panel panel-info centering">
+                                            <div class="panel-heading"><b>{% trans %}Phones Detected Cumulative Last Hour{% endtrans %}</b></div>
+                                            <div class="panel-body">
+                                                <p id="phones-detected-hour" style="font-size:40px; font-weight: 200;">
+                                                    0
+                                                </p>
+                                                <p>
+                                                    <a class="btn btn-default" href="#" role="button">{% trans %}KPI Details{% endtrans %} &raquo;</a>
+                                                </p>
+                                                <p class="gateway-time" style="font-size:0.7rem; font-weight: 200;"></p>
+                                            </div>
+                                        </div>
+                                    </div>{# /.Panel 1.3 #}
+                                    {# Panel 1.4 #}
+                                    <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                                        <div class="panel panel-info centering">
+                                            <div class="panel-heading"><b>{% trans %}Phones Detected Cumulative Today{% endtrans %}</b></div>
+                                            <div class="panel-body">
+                                                <p id="phones-detected-today" style="font-size:40px; font-weight: 200;">
+                                                    0
+                                                </p>
+                                                <p>
+                                                    <a class="btn btn-default" href="#" role="button">{% trans %}KPI Details{% endtrans %} &raquo;</a>
+                                                </p>
+                                                <p class="gateway-time" style="font-size:0.7rem; font-weight: 200;"></p>
+                                            </div>
+                                        </div>
+                                    </div>{# /.Panel 1.4 #}
+                                </div> <!--row-->
+                                {# ------------ END of PANELS ----------- #}
+
+                                <div class="col-xs-12 col-lg-12">
+                                    <h4><b>{% trans %}Historical Variable Charts{% endtrans %}</b></h4>
+                                    <p>{% trans %}Select the variable to visualize{% endtrans %}:</p>
+                                    <div class="examplelinks chartlinks"> |
+                                        <a onclick="renderChart('phones_around_now')" id="phones_around_now" style="cursor:pointer;">
+                                            {% trans %}Phones Around Instantaneous{% endtrans %}
+                                        </a> |
+                                        <a onclick="renderChart('phones_around_hour_mean')" id="phones_around_hour_mean"
+                                           style="cursor:pointer;">
+                                            {% trans %}Phones Around Last Hour Average{% endtrans %}
+                                        </a> |
+                                        <a onclick="renderChart('phones_detected_hour')" id="phones_detected_hour" style="cursor:pointer;">
+                                            {% trans %}Phones Detected Hour{% endtrans %}
+                                        </a> |
+                                        <a onclick="renderChart('phones_detected_today')" id="phones_detected_today" style="cursor:pointer;">
+                                            {% trans %}Phones Detected Today{% endtrans %}
+                                        </a> |
+                                    </div>
+                                    {# aca va el mono #}
+                                    <div id="show_wrapper" class="col-xs-12 col-lg-12">
+                                        {#<div id="chart" class='with-3d-shadow with-transitions'>#}
+                                            {#<svg></svg>#}
+                                        {#</div>#}
+                                        <div id="chart" class='chart'>
+                                            <svg></svg>
+                                        </div>
+                                    </div><!--/.col-xs-12.col-lg-12-->
+                                </div> <!--row-->
                             </div>
-                            {# aca va el mono #}
-                            <div id="show_wrapper" class="col-xs-12 col-lg-12">
-                                {#<div id="chart" class='with-3d-shadow with-transitions'>#}
-                                    {#<svg></svg>#}
-                                {#</div>#}
-                                <div id="chart" class='chart'>
-                                    <svg></svg>
-                                </div>
-                            </div><!--/.col-xs-12.col-lg-12-->
-                        </div> <!--row-->
+                            <br>
+                            {# ------------- End Node Data Group ------------- #}
+                        </div>
+                </div><!--/row-->
 
-
-                    </div>
-                    <br>
-                    {# End Node Data Group #}
-                </div>
-            </div>
+            </div><!--/.col-xs-12.col-sm-9-->
 
             {# left column #}
             <div class="col-xs-6 col-sm-2 col-sm-pull-10 sidebar-offcanvas" id="sidebar">
@@ -144,7 +157,6 @@
     {#<script src="{{ asset('js/d3.v4.min.js') }}"></script>#}
     <script src="{{- asset('js/smoothie.js') -}}"></script>
     <script src="{{- asset('js/client_side.js') -}}"></script>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/d3.min.js') }}"></script>
     <script src="{{ asset('js/nv.d3.js') }}"></script>
     <script src="{{ asset('js/lineWithFocus.js') }}"></script>
