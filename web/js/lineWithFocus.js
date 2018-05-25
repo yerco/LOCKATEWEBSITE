@@ -58,10 +58,14 @@ function requestHandler(limit) { //(callback) {
  */
 function datestringToTimestamp(dateString) {
     'use strict';
-    var date = new Date(dateString + " " + "UTC+2");
-    var timestampMillis = date.getTime();// - (date.getTimezoneOffset() * 1000 * 60);
+    var date = new Date(dateString);
+    // Amsterdam Time - done this way to work in firefox too.
+    date.setHours(date.getHours() - 2);
+    // this line below does not work in firefox, left to remember.
+    //var date = new Date(dateString + " " + "UTC+2");
+    var timestampMillis = date.getTime() - (date.getTimezoneOffset() * 1000 * 60);
     var timeStamp = timestampMillis;// / 1000;
-    return timeStamp
+    return timeStamp;
 }
 
 function adaptData(packet) {
