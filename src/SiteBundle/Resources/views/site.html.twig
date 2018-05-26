@@ -37,7 +37,8 @@
                                     {# Panel 1.1 #}
                                     <div class="panel-div col-xs-12 col-sm-6 col-md-6 col-lg-3">
                                         <div class="panel panel-info centering">
-                                            <div class="panel-heading"><b>{% trans %}Phones Around Now{% endtrans %}</b></div>
+                                            <div class="panel-heading"><b>{% trans %}Phones Around Instantaneous (now){%
+                                                        endtrans %}</b></div>
                                             <div class="panel-body">
                                                 <p id="phones-around-now" style="font-size:40px; font-weight: 200;">
                                                     0
@@ -101,17 +102,23 @@
                                     <h4><b>{% trans %}Historical Variable Charts{% endtrans %}</b></h4>
                                     <p>{% trans %}Select the variable to visualize{% endtrans %}:</p>
                                     <div class="examplelinks chartlinks"> |
-                                        <a onclick="renderChart('phones_around_now')" id="phones_around_now" style="cursor:pointer;">
+                                        <a onclick="renderChart('phones_around_now', 'chart')" id="phones_around_now"
+                                           style="cursor:pointer;">
                                             {% trans %}Phones Around Instantaneous{% endtrans %}
                                         </a> |
-                                        <a onclick="renderChart('phones_around_hour_mean')" id="phones_around_hour_mean"
+                                        <a onclick="renderChart('phones_around_hour_mean', 'chart')"
+                                           id="phones_around_hour_mean"
                                            style="cursor:pointer;">
                                             {% trans %}Phones Around Last Hour Average{% endtrans %}
                                         </a> |
-                                        <a onclick="renderChart('phones_detected_hour')" id="phones_detected_hour" style="cursor:pointer;">
+                                        <a onclick="renderChart('phones_detected_hour', 'chart')"
+                                           id="phones_detected_hour"
+                                           style="cursor:pointer;">
                                             {% trans %}Phones Detected Hour{% endtrans %}
                                         </a> |
-                                        <a onclick="renderChart('phones_detected_today')" id="phones_detected_today" style="cursor:pointer;">
+                                        <a onclick="renderChart('phones_detected_today', 'chart')"
+                                           id="phones_detected_today"
+                                           style="cursor:pointer;">
                                             {% trans %}Phones Detected Today{% endtrans %}
                                         </a> |
                                     </div>

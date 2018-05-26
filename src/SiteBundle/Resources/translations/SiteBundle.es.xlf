@@ -43,7 +43,7 @@
                 <target>número total de nodos</target>
             </trans-unit>
             <trans-unit id="site.phones-around-now">
-                <source>Phones Around Now</source>
+                <source>Phones Around Instantaneous (now)</source>
                 <target>Teléfonos alrededor en estos instantes</target>
             </trans-unit>
             <trans-unit id="site.phones-around-last-hour-average">
