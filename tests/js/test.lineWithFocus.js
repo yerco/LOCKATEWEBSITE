@@ -158,7 +158,7 @@ describe('Line with focus', function() {
         });
 
         /* This is a graphic test - need to check the browser */
-       it('should make a graph with the requested info', function() {
+       xit('should make a graph with the requested info', function() {
             // here timestamps are backward
             var sample = [
                 {

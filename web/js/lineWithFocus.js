@@ -231,6 +231,7 @@ function addGraphWrapper(data, startBrush, endBrush, chartDivId) {
 function renderChart(currentChart, chartDivId) {
     "use strict";
     window.currentChart = currentChart;
+    console.log("chart div id: ", chartDivId);
     // coloring active graph's link
     graphLinks.forEach(function(clickedLink) {
         if (clickedLink === currentChart) {
