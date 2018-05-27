@@ -3,6 +3,22 @@
 This site receives request from a counterpart API which stores data sent
 by sensors (through their gateways)
 
+## current software libraries versions
+
+### Front-end
+- nvd3 version 1.8.6-dev (CSS) - /css/nv.d3.css
+- nvd3 version 1.8.6 (JS) - /js/nv.d3.min.js
+- AutobahnJS unique official release - /js/autobahn.js
+- Bootstrap v3.3.7 (CSS) - /bootstrap/css/bootstrap.min.css
+- Bootstrap v3.3.6 (JS) - js/bootstrap.min.js
+- Font Awesome 4.2.0 - /bootstrap/css/font-awesome.min.css
+- d3.js ?????? - /js/d3.min.js
+- jQuery v2.1.4 - /js/jquery.min.js
+
+### Back-end
+- Symfony 3.4
+- as for the rest check composer(.json;.lock) 
+
 ## Dependencies
 ```
 sudo apt-get install libzmq-dev

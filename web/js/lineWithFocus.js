@@ -7,6 +7,7 @@ var graphLinks = [
     "phones_detected_hour",
     "phones_detected_today"
 ];
+
 function requestHandler(limit) { //(callback) {
     'use strict';
     var url = devUrl + "/api/v1/lastgatewaynodesevents/1/1/" + limit;
@@ -60,6 +61,7 @@ function datestringToTimestamp(dateString) {
     'use strict';
     var date = new Date(dateString);
     // Amsterdam Time - done this way to work in firefox too.
+    // As Amsterdam is GMT+02 we remove the offset first.
     date.setHours(date.getHours() - 2);
     // this line below does not work in firefox, left to remember.
     //var date = new Date(dateString + " " + "UTC+2");

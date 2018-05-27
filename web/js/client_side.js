@@ -52,21 +52,14 @@ var conn = new ab.Session('ws://localhost:8018',
             /* Section get through AJAX request */
             /* graph  nvd3 */
             var limit = 100;
-            var downwardLimit = Math.ceil(limit * 0.7);
-            // `limit - 1` last element of the array
-            var upperLimit = Math.floor(limit - 1);
             // we start with `phones_around_hour_now`
             requestHandler(limit).then(function(e) {
                 window.allData = adaptData(JSON.parse(e.target.response));
                 console.log(window.allData);
-                specificGraphData[0] = allData[currentChart];
+                specificGraphData[0] = allData[window.currentChart];
                 // reverse -> order timestamps
                 specificGraphData[0].values = specificGraphData[0].values.reverse();
-                var startBrush = window.allData[currentChart].values[downwardLimit].x;
-                var endBrush = window.allData[currentChart].values[upperLimit].x;
-                //console.log(allData);
                 renderChart(window.currentChart, "chart");
-                //addGraphWrapper(specificGraphData, startBrush, endBrush);
             }, function() {
                 console.log("Error");
             });

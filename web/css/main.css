@@ -1,12 +1,8 @@
-/*!
- * Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
 body {
     background-color: #f8f8f8;
     background-size: 100%;
-    background-origin: content;
+    /* `content is not a valid property` */
+    /*background-origin: content;*/
     background-repeat: repeat;
 }
 
@@ -21,7 +17,7 @@ body {
 }
 
 .login-panel {
-    margin-top: 25%;
+    margin-top: 15%;
 }
 
 .btn {
@@ -32,7 +28,7 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 12ev;
+    font-size: 1.5em;
     margin: 4px 2px;
     cursor: pointer;
 }

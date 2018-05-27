@@ -22,19 +22,25 @@ class JsonHandler
                 'article' => 'articulo',
                 'when' => time()
             );
-            $context = new ZMQContext();
-            $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, "my pusher");
-            $socket->connect("tcp://localhost:5555");
+            try {
+                $context = new ZMQContext();
+                $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, "my pusher");
+                $socket->connect("tcp://localhost:5555");
 
-            $this->logger->info("Records sent .");
-            // pay attention to this name `gateway_id`
-            // (it's same at ReceiverPusher `onNewData`
+                $this->logger->info("Records sent .");
+                // pay attention to this name `gateway_id`
+                // (it's same at ReceiverPusher `onNewData`
 
-            //var_dump($request_json_content);
-            $socket->send(json_encode(
-                    $entry_data
-                )
-            );
+                //var_dump($request_json_content);
+                $socket->send(json_encode(
+                        $entry_data
+                    )
+                );
+            }
+            catch(\ZMQSocketException $e) {
+                $this->logger->alert("ZMQSocketException");
+                echo $e->getMessage();
+            }
         }
     }
 }

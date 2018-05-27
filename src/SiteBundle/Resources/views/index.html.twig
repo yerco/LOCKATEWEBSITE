@@ -8,21 +8,25 @@
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
 </head>
 <body background="{{- asset('images/tech2b.jpg') -}}">
-{%- block body -%}
-    {%- if is_granted('ROLE_USER') -%}
-        <a href="{{ path('site_bundle_security_logout') }}">Logout</a>
-    {%- else -%}
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    {%- include '@FOSUser/Security/login_content.html.twig' -%}
+
+    {%- block body -%}
+        {%- if is_granted('ROLE_USER') -%}
+            <a href="{{ path('site_bundle_security_logout') }}">Logout</a>
+        {%- else -%}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        {%- include '@FOSUser/Security/login_content.html.twig' -%}
+                    </div>
                 </div>
             </div>
-        </div>
-    {%- endif -%}
+        {%- endif -%}
+    {% endblock %}
+
+    <div class=".footer" align="center">
+        <center><p style= "color: white; text-shadow: 1px 1px #000000;">© 2018 Lockate - Monitoring</p></center>
+    </div>
 
     <br/>Lock-8 ;)
-
-{% endblock %}
 </body>
 </html>
