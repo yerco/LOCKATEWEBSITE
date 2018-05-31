@@ -112,7 +112,6 @@ class SiteController extends Controller
         }
         // End Verification
 
-
         $request_json_content = json_decode($request->getContent());
 
         if ($request_json_content->gateway_record) {
@@ -135,11 +134,19 @@ class SiteController extends Controller
                     /* PRODUCTION */
                     $socket->connect("tcp://188.166.11.160:5555");
                 }
-                $logger->info("Records sent .");
+                if ($this->getParameter('environment') == 'docker') {
+                    /* DOCKER */
+                    echo "\n\n Docker environment being used\n";
+                    //$socket->connect("tcp://172.22.0.2:5556");
+                    $socket->connect("tcp://lockate_websocketserver:5556");
+                    //$socket->connect("tcp://lock8dockerized_default:5556");
+                }
+                $logger->info("Records sent by site at " . time() . " " .
+                    gmdate("Y-m-d\TH:i:s\Z", time()));
                 // pay attention to this name `gateway_id`
                 // (it's same at ReceiverPusher `onNewData`
 
-                //var_dump($request_json_content);
+                //$logger->info(var_dump($request_json_content));
                 $socket->send(json_encode(
                         $entry_data
                     )
@@ -151,7 +158,7 @@ class SiteController extends Controller
         }
 
         return new JsonResponse(array(
-                "message" => "received at " . time(),
+                "message" => "received by site server at " . time() ,
                 "environment"   => $this->getParameter('environment')
             )
         );

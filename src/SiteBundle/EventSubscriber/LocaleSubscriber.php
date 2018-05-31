@@ -27,9 +27,9 @@ class LocaleSubscriber implements EventSubscriberInterface
          * session cookie.
          * https://symfony.com/doc/3.4/session/avoid_session_start.html
          */
-        //if (!$request->hasPreviousSession()) {
-        //    return;
-        //}
+        if (!$request->hasPreviousSession()) {
+           return;
+        }
 
         // try to see if the locale has been set as a _locale routing parameter
         if ($locale = $request->attributes->get('_locale')) {

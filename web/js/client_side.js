@@ -39,7 +39,7 @@ function panelsInfo(topic, data) {
 }
 
 /* DEVELOPMENT */
-var conn = new ab.Session('ws://localhost:8018',
+var conn = new ab.Session('ws://localhost:8028',
 /* PRODUCTION */
 //var conn = new ab.Session('ws://lockate.hopto.org:8018',
     function() {
